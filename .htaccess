@@ -1,0 +1,19 @@
+RewriteEngine on
+
+RewriteRule ^Dashboard dashboard.php [L]
+
+RewriteRule ^Add-Category add-category.php [L]
+
+RewriteRule ^Category category.php [L]
+
+RewriteRule ^Insert insert.php [L]
+
+RewriteRule ^Update update.php [L]
+
+RewriteRule ^Delete delete.php [L]
+
+RewriteRule ^Profile profile.php [L]
+
+RewriteRule ^Login index.php [L]
+
+RewriteRule ^Logout logout.php [L]
