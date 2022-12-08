@@ -7,7 +7,7 @@
             <li class="dropdown header-profile">
                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                     <?php $data = $db_handle->runQuery("SELECT * FROM admin_login where id={$_SESSION['userid']}"); ?>
-                    <img src="../<?php echo $data[0]["image"]; ?>" width="20" alt=""/>
+                    <img src="<?php echo $data[0]["image"]; ?>" width="20" alt=""/>
                     <div class="header-info ms-3">
                         <span class="font-w600 "><b><?php echo $data[0]["name"]; ?></b></span>
                         <small class="text-end font-w400"><?php echo $data[0]["email"]; ?></small>
@@ -44,77 +44,12 @@
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
                     <i class="flaticon-041-graph"></i>
-                    <span class="nav-text">Category</span>
+                    <span class="nav-text">USDT</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="Add-Category">Add Category</a></li>
-                    <li><a href="Category">Category</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-050-info"></i>
-                    <span class="nav-text">Store</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Add-Store">Add Store</a></li>
-                    <li><a href="Store">Store</a></li>
-                    <li><a href="Rating-Store">Store Rating</a></li>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-086-star"></i>
-                    <span class="nav-text">Trending Deal</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Add-Trending-Deal">Add Trending Deal</a></li>
-                    <li><a href="Trending-Deal">Trending Deal</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-045-heart"></i>
-                    <span class="nav-text">Offer</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Add-Offer">Add Offer</a></li>
-                    <li><a href="Offer">Offer</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:void(0)" class="has-arrow ai-icon" aria-expanded="false">
-                    <i class="flaticon-013-checkmark"></i>
-                    <span class="nav-text">Store Offer</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Data-Add-Offer">Add Store Offer</a></li>
-                    <li><a href="Data-Offer">Store Offer</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-022-copy"></i>
-                    <span class="nav-text">Blog Category</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Add-Blog-Category">Add Blog Category</a></li>
-                    <li><a href="Blog-Category">Blog Category</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-072-printer"></i>
-                    <span class="nav-text">Blog</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Add-Blog">Add Blog</a></li>
-                    <li><a href="Blog">Blog</a></li>
-                </ul>
-            </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                    <i class="flaticon-043-menu"></i>
-                    <span class="nav-text">Others</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="Newsletter">Newsletter</a></li>
-                    <li><a href="Admin">Admin</a></li>
+                    <li><a href="Deposit-USDT">Deposit USDT</a></li>
+                    <li><a href="Staking-USDT">Staking USDT</a></li>
+                    <li><a href="Today-Buy-Sell">Today Buy and Sell Price</a></li>
                 </ul>
             </li>
         </ul>

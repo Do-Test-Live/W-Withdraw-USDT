@@ -20,7 +20,7 @@ $db_handle = new DBController();
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Add Category | USDT</title>
+    <title>Deposit USDT | USDT</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -70,7 +70,7 @@ $db_handle = new DBController();
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            Add Category
+                            Deposit USDT
                         </div>
                     </div>
                 </div>
@@ -99,20 +99,26 @@ $db_handle = new DBController();
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Add Category</h4>
+                            <h4 class="card-title">Deposit USDT</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form action="Insert" method="post">
                                     <div class="mb-3 row">
-                                        <label class="col-sm-3 col-form-label">Category Name</label>
+                                        <label class="col-sm-3 col-form-label">USDT</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="c_name" placeholder="Category Name" required>
+                                            <input type="text" class="form-control" name="c_name" placeholder="USDT" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="c_name" placeholder="Staking Days: 7, 10, 30 etc." required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-sm-6 mx-auto">
-                                            <button type="submit" class="btn btn-primary w-25" name="addCategory">Submit</button>
+                                            <button type="submit" class="btn btn-primary w-25" name="depositUSDT">Submit</button>
                                         </div>
                                     </div>
                                 </form>
