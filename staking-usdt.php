@@ -190,7 +190,7 @@ $db_handle = new DBController();
                                                         ?>
                                                         <span class="badge light badge-info">Pending</span>
                                                         <?php
-                                                    } else if ($usdt_data[$i]["status"] == 1) {
+                                                    } else {
                                                         ?>
                                                         <span class="badge light badge-success">Withdraw</span>
                                                         <?php

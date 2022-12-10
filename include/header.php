@@ -2,7 +2,7 @@
     Nav header start
 ***********************************-->
 <div class="nav-header">
-    <a href="index.html" class="brand-logo">
+    <a href="Dashboard" class="brand-logo">
         <div class="logo-abbr" width="53" height="53">
             <img src="public/images/logo.png" class="img-fluid" alt=""/>
         </div>
