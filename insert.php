@@ -11,14 +11,14 @@ if (!isset($_SESSION["userid"])) {
 }
 
 if (isset($_POST["depositUSDT"])) {
-    $d_usdt = (double)$db_handle->checkValue($_POST['d_usdt']);
+    $d_usdt = $db_handle->checkValue($_POST['d_usdt']);
 
     $days = $db_handle->checkValue($_POST['staking_days']);
 
     $w_usdt = $d_usdt;
 
     if ($days >= 7) {
-        $w_usdt = ((8 / 10000) * $days) + $d_usdt;
+        $w_usdt = ((8 / 10000) * $days) + (double) $d_usdt;
     }
 
     $inserted_at = date("Y-m-d H:i:s");

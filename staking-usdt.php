@@ -96,7 +96,7 @@ $db_handle = new DBController();
         <!-- row -->
         <div class="container-fluid">
             <div class="row invoice-card-row">
-                <?php if (isset($_GET['catId'])) { ?>
+                <?php if (isset($_GET['depositId'])) { ?>
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -106,27 +106,36 @@ $db_handle = new DBController();
                                 <div class="basic-form">
                                     <form method="post" action="Update">
 
-                                        <?php $data = $db_handle->runQuery("SELECT * FROM category where id={$_GET['catId']}"); ?>
+                                        <?php $data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id={$_GET['depositId']}"); ?>
 
                                         <input type="hidden" value="<?php echo $data[0]["id"]; ?>" name="id" required>
 
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Category Name</label>
+                                            <label class="col-sm-3 col-form-label">USDT</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="c_name"
-                                                       placeholder="Category Name"
-                                                       value="<?php echo $data[0]["c_name"]; ?>" required>
+                                                <input type="text" class="form-control" name="d_usdt"
+                                                       placeholder="USDT"
+                                                       value="<?php echo $data[0]["d_usdt"]; ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="staking_days"
+                                                       placeholder="Staking Days (T3,T7,T10,T30)"
+                                                       value="<?php echo $data[0]["days"]; ?>" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Status</label>
                                             <div class="col-sm-9">
-                                                <select class="default-select  form-control wide" name="status" required>
-                                                    <option value="1" <?php echo ($data[0]["status"] == 1) ? "selected" : ""; ?>>
-                                                        Show
+                                                <select class="default-select  form-control wide" name="status"
+                                                        required>
+                                                    <option value="Pending" <?php echo ($data[0]["status"] == 'Pending') ? "selected" : ""; ?>>
+                                                        Pending
                                                     </option>
-                                                    <option value="0" <?php echo ($data[0]["status"] == 0) ? "selected" : ""; ?>>
-                                                        Hide
+                                                    <option value="Withdraw" <?php echo ($data[0]["status"] == 'Withdraw') ? "selected" : ""; ?>>
+                                                        Withdraw
                                                     </option>
                                                 </select>
                                             </div>
@@ -134,7 +143,7 @@ $db_handle = new DBController();
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
                                                 <button type="submit" class="btn btn-primary w-25"
-                                                        name="updateCategory">Submit
+                                                        name="updateUSDT">Submit
                                                 </button>
                                             </div>
                                         </div>
@@ -159,6 +168,7 @@ $db_handle = new DBController();
                                             <th>Withdraw USDT</th>
                                             <th>Days</th>
                                             <th>Status</th>
+                                            <th>Withdraw</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -188,9 +198,32 @@ $db_handle = new DBController();
                                                     ?>
                                                 </td>
                                                 <td>
+                                                    <?php
+                                                    if ($usdt_data[$i]["status"] == 'Pending') {
+                                                        ?>
+                                                        <a href="Update?withdrawId=<?php echo $usdt_data[$i]["id"]; ?>" class="btn btn-primary">Withdraw Available <span
+                                                                    class="btn-icon-end"><i
+                                                                        class="fa fa-star"></i></span>
+                                                        </a>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success">Withdraw
+                                                            Successful <span class="btn-icon-end"><i
+                                                                        class="fa fa-check"></i></span>
+                                                        </button>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td>
                                                     <div class="d-flex">
-                                                        <a href="Staking-USDT?depositId=<?php echo $usdt_data[$i]["id"]; ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-                                                        <a onclick="usdtDelete(<?php echo $usdt_data[$i]["id"]; ?>);" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                        <a href="Staking-USDT?depositId=<?php echo $usdt_data[$i]["id"]; ?>"
+                                                           class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                        <a onclick="usdtDelete(<?php echo $usdt_data[$i]["id"]; ?>);"
+                                                           class="btn btn-danger shadow btn-xs sharp"><i
+                                                                    class="fa fa-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
