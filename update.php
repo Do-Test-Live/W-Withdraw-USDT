@@ -58,7 +58,7 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         } else {
             echo "<script>
-                document.cookie = 'alert = 4;';
+                document.cookie = 'alert = 5;';
                 window.location.href='Staking-USDT';
                 </script>";
         }
@@ -77,11 +77,67 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         } else {
             echo "<script>
-                document.cookie = 'alert = 4;';
+                document.cookie = 'alert = 5;';
                 window.location.href='Staking-USDT';
                 </script>";
         }
     }
+}
+
+if (isset($_POST['updateBuySell'])) {
+    $id = 1;
+
+    $buy_price = $db_handle->checkValue($_POST['buy_price']);
+
+    $sell_price = $db_handle->checkValue($_POST['sell_price']);
+
+    $update = $db_handle->insertQuery("update buysell set buy_price='$buy_price',sell_price='$sell_price' where id='{$id}'");
+
+    echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Today-Buy-Sell';
+                </script>";
+
+}
+
+if (isset($_POST['updateProfile'])) {
+    $id = $db_handle->checkValue($_POST['id']);
+
+    $name = $db_handle->checkValue($_POST['name']);
+
+    $image='';
+    $query='';
+
+    if (!empty($_FILES['image']['name'])){
+        $RandomAccountNumber = mt_rand(1, 99999);
+        $file_name = $RandomAccountNumber."_" . $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+
+        $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        if (
+            $file_type != "jpg" && $file_type != "png" && $file_type != "jpeg"
+            && $file_type != "gif"
+        ) {
+            $attach_files = '';
+        } else {
+
+            $data = $db_handle->runQuery("select * FROM `store` WHERE id='{$id}'");
+            unlink($data[0]['image']);
+
+            move_uploaded_file($file_tmp, "assets/images/admin/" .$file_name);
+            $image = "assets/images/admin/" . $file_name;
+            $query.=",`image`=".$image;
+        }
+    }
+
+    $update = $db_handle->insertQuery("UPDATE `admin_login` SET `name`='$name'".$query." WHERE `id`='{$id}'");
+
+    echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Profile';
+                </script>";
+
 }
 
 if (isset($_POST['updatePassword'])) {

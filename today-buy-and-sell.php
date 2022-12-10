@@ -104,23 +104,27 @@ $db_handle = new DBController();
                         <div class="card-body">
                             <div class="basic-form">
                                 <form action="Update" method="post">
+
+                                    <?php $data = $db_handle->runQuery("SELECT * FROM buysell where id=1;"); ?>
+
+
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Buy Price (HKD)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="c_name"
-                                                   placeholder="Buy Price (HKD)" required>
+                                            <input type="text" class="form-control" name="buy_price"
+                                                  value="<?php echo $data[0]["buy_price"]; ?>" placeholder="Buy Price (HKD)" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Sell Price (HKD)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="c_name"
-                                                   placeholder="Sell Price (HKD)" required>
+                                            <input type="text" class="form-control" name="sell_price"
+                                                   value="<?php echo $data[0]["sell_price"]; ?>" placeholder="Sell Price (HKD)" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <div class="col-sm-6 mx-auto">
-                                            <button type="submit" class="btn btn-primary w-25" name="depositUSDT">
+                                            <button type="submit" class="btn btn-primary w-25" name="updateBuySell">
                                                 Submit
                                             </button>
                                         </div>

@@ -106,7 +106,13 @@ $db_handle = new DBController();
                                 </svg>
                             </div>
                             <div>
-                                <h2 class="text-white invoice-num">0 HKD</h2>
+                                <h2 class="text-white invoice-num">
+                                    <?php
+                                    $data = $db_handle->runQuery("SELECT sum(w_usdt) as total_usdt FROM deposit_usdt where status='Pending';");
+                                    echo $data[0]["total_usdt"];
+                                    ?>
+                                    HKD
+                                </h2>
                                 <span class="text-white fs-18">Total Withdraw Remaining</span>
                             </div>
                         </div>
@@ -122,7 +128,13 @@ $db_handle = new DBController();
                                 </svg>
                             </div>
                             <div>
-                                <h2 class="text-white invoice-num">0 HKD</h2>
+                                <h2 class="text-white invoice-num">
+                                    <?php
+                                    $data = $db_handle->runQuery("SELECT sum(d_usdt) as total_usdt FROM deposit_usdt;");
+                                    echo $data[0]["total_usdt"];
+                                    ?>
+                                    HKD
+                                </h2>
                                 <span class="text-white fs-18">Total Staking Amount</span>
                             </div>
                         </div>
@@ -140,7 +152,13 @@ $db_handle = new DBController();
                                 </svg>
                             </div>
                             <div>
-                                <h2 class="text-white invoice-num">0 HKD</h2>
+                                <h2 class="text-white invoice-num">
+                                    <?php
+                                    $data = $db_handle->runQuery("SELECT * FROM buysell where id=1;");
+                                    echo $data[0]["buy_price"];
+                                    ?>
+                                    HKD
+                                </h2>
                                 <span class="text-white fs-18">Today Buy Price</span>
                             </div>
                         </div>
@@ -158,7 +176,10 @@ $db_handle = new DBController();
                                 </svg>
                             </div>
                             <div>
-                                <h2 class="text-white invoice-num">0 HKD</h2>
+                                <h2 class="text-white invoice-num">
+                                    <?php echo $data[0]["sell_price"]; ?>
+                                    HKD
+                                </h2>
                                 <span class="text-white fs-18">Today Sell Price</span>
                             </div>
                         </div>
