@@ -58,7 +58,7 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         } else {
             echo "<script>
-                document.cookie = 'alert = 5;';
+                document.cookie = 'alert = 6;';
                 window.location.href='Staking-USDT';
                 </script>";
         }
@@ -77,7 +77,7 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         } else {
             echo "<script>
-                document.cookie = 'alert = 5;';
+                document.cookie = 'alert = 6;';
                 window.location.href='Staking-USDT';
                 </script>";
         }
@@ -122,12 +122,12 @@ if (isset($_POST['updateProfile'])) {
             $attach_files = '';
         } else {
 
-            $data = $db_handle->runQuery("select * FROM `store` WHERE id='{$id}'");
+            $data = $db_handle->runQuery("select * FROM `admin_login` WHERE id='{$id}'");
             unlink($data[0]['image']);
 
             move_uploaded_file($file_tmp, "assets/images/admin/" .$file_name);
-            $image = "assets/images/admin/" . $file_name;
-            $query.=",`image`=".$image;
+            $image = 'assets/images/admin/' . $file_name;
+            $query.=",`image`='".$image."'";
         }
     }
 

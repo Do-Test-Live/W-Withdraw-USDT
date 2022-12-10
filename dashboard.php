@@ -109,7 +109,11 @@ $db_handle = new DBController();
                                 <h2 class="text-white invoice-num">
                                     <?php
                                     $data = $db_handle->runQuery("SELECT sum(w_usdt) as total_usdt FROM deposit_usdt where status='Pending';");
-                                    echo $data[0]["total_usdt"];
+
+                                    if($data[0]["total_usdt"]!='')
+                                        echo $data[0]["total_usdt"];
+                                    else
+                                        echo '0.00';
                                     ?>
                                     HKD
                                 </h2>
@@ -131,7 +135,11 @@ $db_handle = new DBController();
                                 <h2 class="text-white invoice-num">
                                     <?php
                                     $data = $db_handle->runQuery("SELECT sum(d_usdt) as total_usdt FROM deposit_usdt;");
-                                    echo $data[0]["total_usdt"];
+
+                                    if($data[0]["total_usdt"]!='')
+                                        echo $data[0]["total_usdt"];
+                                    else
+                                        echo '0.00';
                                     ?>
                                     HKD
                                 </h2>
