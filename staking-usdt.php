@@ -20,7 +20,7 @@ $db_handle = new DBController();
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Category | USDT</title>
+    <title>Staking USDT | USDT</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -70,7 +70,7 @@ $db_handle = new DBController();
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            Category
+                            Staking USDT
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ $db_handle = new DBController();
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Update Category</h4>
+                                <h4 class="card-title">Update Staking USDT</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -147,7 +147,7 @@ $db_handle = new DBController();
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Category</h4>
+                                <h4 class="card-title">Staking USDT</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -155,64 +155,42 @@ $db_handle = new DBController();
                                         <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>Category Name</th>
+                                            <th>Deposit USDT</th>
+                                            <th>Withdraw USDT</th>
+                                            <th>Days</th>
                                             <th>Status</th>
-                                            <th>Store</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $category_data = $db_handle->runQuery("SELECT * FROM category order by id desc");
-                                        $row_count = $db_handle->numRows("SELECT * FROM category order by id desc");
+                                        $usdt_data = $db_handle->runQuery("SELECT * FROM deposit_usdt order by id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_usdt order by id desc");
 
                                         for ($i = 0; $i < $row_count; $i++) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
-                                                <td><?php echo $category_data[$i]["c_name"]; ?></td>
+                                                <td><?php echo $usdt_data[$i]["d_usdt"]; ?></td>
+                                                <td><?php echo $usdt_data[$i]["w_usdt"]; ?></td>
+                                                <td><?php echo $usdt_data[$i]["days"]; ?></td>
                                                 <td>
                                                     <?php
-                                                    if ($category_data[$i]["status"] == 0) {
+                                                    if ($usdt_data[$i]["status"] == 'Pending') {
                                                         ?>
-                                                        <span class="badge light badge-danger">Hide</span>
+                                                        <span class="badge light badge-info">Pending</span>
                                                         <?php
-                                                    } else if ($category_data[$i]["status"] == 1) {
+                                                    } else if ($usdt_data[$i]["status"] == 1) {
                                                         ?>
-                                                        <span class="badge light badge-success">Show</span>
+                                                        <span class="badge light badge-success">Withdraw</span>
                                                         <?php
                                                     }
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <?php
-                                                    $row = $db_handle->numRows("SELECT * FROM store WHERE category_id='{$category_data[$i]['id']}'");
-                                                    echo $row;
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown mx-auto text-end">
-                                                        <div class="btn-link" data-bs-toggle="dropdown">
-                                                            <svg width="24px" height="24px" viewBox="0 0 24 24"
-                                                                 version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none"
-                                                                   fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                                                    <circle fill="#000000" cx="5" cy="12"
-                                                                            r="2"></circle>
-                                                                    <circle fill="#000000" cx="12" cy="12"
-                                                                            r="2"></circle>
-                                                                    <circle fill="#000000" cx="19" cy="12"
-                                                                            r="2"></circle>
-                                                                </g>
-                                                            </svg>
-                                                        </div>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item"
-                                                               href="Category?catId=<?php echo $category_data[$i]["id"]; ?>">Edit</a>
-                                                            <a class="dropdown-item"
-                                                               onclick="categoryDelete(<?php echo $category_data[$i]["id"]; ?>);">Delete</a>
-                                                        </div>
+                                                    <div class="d-flex">
+                                                        <a href="Staking-USDT?depositId=<?php echo $usdt_data[$i]["id"]; ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
+                                                        <a onclick="usdtDelete(<?php echo $usdt_data[$i]["id"]; ?>);" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -254,7 +232,7 @@ $db_handle = new DBController();
 <?php require_once('include/js.php'); ?>
 
 <script>
-    function categoryDelete(id) {
+    function usdtDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -269,7 +247,7 @@ $db_handle = new DBController();
                     type: 'get',
                     url: 'Delete',
                     data: {
-                        catId: id
+                        depositId: id
                     },
                     success: function (data) {
                         if (data.toString() === 'P') {
@@ -278,15 +256,15 @@ $db_handle = new DBController();
                                 'Your have store in this category.',
                                 'error'
                             ).then((result) => {
-                                window.location = 'Category';
+                                window.location = 'Staking-USDT';
                             });
                         } else {
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                'Your Deposit USDT has been deleted.',
                                 'success'
                             ).then((result) => {
-                                window.location = 'Category';
+                                window.location = 'Staking-USDT';
                             });
                         }
                     }
@@ -294,10 +272,10 @@ $db_handle = new DBController();
             } else {
                 Swal.fire(
                     'Cancelled!',
-                    'Your Category is safe :)',
+                    'Your Deposit USDT is safe :)',
                     'error'
                 ).then((result) => {
-                    window.location = 'Category';
+                    window.location = 'Staking-USDT';
                 });
             }
         })

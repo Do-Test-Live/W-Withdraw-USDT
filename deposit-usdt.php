@@ -107,13 +107,13 @@ $db_handle = new DBController();
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">USDT</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="c_name" placeholder="USDT" required>
+                                            <input type="text" class="form-control" name="d_usdt" placeholder="USDT" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="c_name" placeholder="Staking Days: 7, 10, 30 etc." required>
+                                            <input type="text" class="form-control" name="staking_days" placeholder="Staking Days: 7, 10, 30 etc." required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
