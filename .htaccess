@@ -2,11 +2,7 @@ RewriteEngine on
 
 RewriteRule ^Dashboard dashboard.php [L]
 
-RewriteRule ^Deposit-USDT deposit-usdt.php [L]
-
 RewriteRule ^Staking-USDT staking-usdt.php [L]
-
-RewriteRule ^Today-Buy-Sell today-buy-and-sell.php [L]
 
 RewriteRule ^Insert insert.php [L]
 
