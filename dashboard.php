@@ -111,7 +111,7 @@ $db_handle = new DBController();
                                     $data = $db_handle->runQuery("SELECT sum(w_usdt) as total_usdt FROM deposit_usdt where status='Pending';");
 
                                     if($data[0]["total_usdt"]!='')
-                                        echo $data[0]["total_usdt"];
+                                        echo ($data[0]["total_usdt"]*7.8);
                                     else
                                         echo '0.00';
                                     ?>
@@ -137,7 +137,7 @@ $db_handle = new DBController();
                                     $data = $db_handle->runQuery("SELECT sum(d_usdt) as total_usdt FROM deposit_usdt;");
 
                                     if($data[0]["total_usdt"]!='')
-                                        echo $data[0]["total_usdt"];
+                                        echo ($data[0]["total_usdt"]*7.8);
                                     else
                                         echo '0.00';
                                     ?>
@@ -163,7 +163,7 @@ $db_handle = new DBController();
                                 <h2 class="text-white invoice-num">
                                     <?php
                                     $data = $db_handle->runQuery("SELECT * FROM buysell where id=1;");
-                                    echo $data[0]["buy_price"];
+                                    echo ($data[0]["buy_price"]*7.8);
                                     ?>
                                     HKD
                                 </h2>
@@ -185,7 +185,7 @@ $db_handle = new DBController();
                             </div>
                             <div>
                                 <h2 class="text-white invoice-num">
-                                    <?php echo $data[0]["sell_price"]; ?>
+                                    <?php echo ($data[0]["sell_price"]*7.8); ?>
                                     HKD
                                 </h2>
                                 <span class="text-white fs-18">Today Sell Price</span>

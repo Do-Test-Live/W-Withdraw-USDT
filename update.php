@@ -19,10 +19,6 @@ if (isset($_POST['updateUSDT'])) {
 
     $w_usdt = $d_usdt;
 
-    if ($days >= 7) {
-        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
-    }
-
     $status = $db_handle->checkValue($_POST['status']);
 
     $update = $db_handle->insertQuery("update deposit_usdt set d_usdt='$d_usdt',w_usdt='$w_usdt',days='$days', status='$status' where id='{$id}'");
@@ -95,7 +91,7 @@ if (isset($_POST['updateBuySell'])) {
 
     echo "<script>
                 document.cookie = 'alert = 3;';
-                window.location.href='Today-Buy-Sell';
+                window.location.href='Staking-USDT';
                 </script>";
 
 }

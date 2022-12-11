@@ -13,20 +13,18 @@ if (!isset($_SESSION["userid"])) {
 if (isset($_POST["depositUSDT"])) {
     $d_usdt = $db_handle->checkValue($_POST['d_usdt']);
 
+    $usdt_price = $db_handle->checkValue($_POST['usdt_price']);
+
     $days = $db_handle->checkValue($_POST['staking_days']);
 
     $w_usdt = $d_usdt;
 
-    if ($days >= 7) {
-        $w_usdt = ((8 / 10000) * $days) + (double) $d_usdt;
-    }
-
     $inserted_at = date("Y-m-d H:i:s");
 
-    $insert = $db_handle->insertQuery("INSERT INTO `deposit_usdt`(`d_usdt`, `w_usdt`, `days`, `inserted_at`) VALUES ('$d_usdt','$w_usdt','$days','$inserted_at')");
+    $insert = $db_handle->insertQuery("INSERT INTO `deposit_usdt`(`d_usdt`, `w_usdt`, `usdt_price`, `days`, `inserted_at`) VALUES ('$d_usdt','$w_usdt','$usdt_price','$days','$inserted_at')");
 
     echo "<script>
                 document.cookie = 'alert = 3;';
-                window.location.href='Deposit-USDT';
+                window.location.href='Staking-USDT';
                 </script>";
 }

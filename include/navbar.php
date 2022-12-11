@@ -42,15 +42,10 @@
                 </a>
             </li>
             <li>
-                <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
+                <a class="ai-icon" href="Staking-USDT" aria-expanded="false">
                     <i class="flaticon-041-graph"></i>
                     <span class="nav-text">USDT</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="Deposit-USDT">Deposit USDT</a></li>
-                    <li><a href="Staking-USDT">Staking USDT</a></li>
-                    <li><a href="Today-Buy-Sell">Today Buy and Sell Price</a></li>
-                </ul>
             </li>
         </ul>
     </div>

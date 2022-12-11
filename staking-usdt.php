@@ -2,6 +2,7 @@
 session_start();
 require_once("include/dbController.php");
 $db_handle = new DBController();
+date_default_timezone_set("Asia/Hong_Kong");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@ $db_handle = new DBController();
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Staking USDT | USDT</title>
+    <title>USDT | USDT</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -70,7 +71,7 @@ $db_handle = new DBController();
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            Staking USDT
+                            USDT
                         </div>
                     </div>
                 </div>
@@ -153,6 +154,89 @@ $db_handle = new DBController();
                         </div>
                     </div>
                 <?php } else { ?>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Deposit USDT</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="Insert" method="post">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="d_usdt" placeholder="USDT"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="staking_days"
+                                                       placeholder="Staking Days: 7, 10, 30 etc." required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT Price</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="usdt_price"
+                                                       placeholder="USDT Price" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6 mx-auto">
+                                                <button type="submit" class="btn btn-primary w-25" name="depositUSDT">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Today Buy and Sell Price</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="Update" method="post">
+
+                                        <?php $data = $db_handle->runQuery("SELECT * FROM buysell where id=1;"); ?>
+
+
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Buy Price (USDT)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="buy_price"
+                                                       value="<?php echo $data[0]["buy_price"]; ?>"
+                                                       placeholder="Buy Price (USDT)" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Sell Price (USDT)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="sell_price"
+                                                       value="<?php echo $data[0]["sell_price"]; ?>"
+                                                       placeholder="Sell Price (USDT)" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6 mx-auto">
+                                                <button type="submit" class="btn btn-primary w-25" name="updateBuySell">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -165,7 +249,9 @@ $db_handle = new DBController();
                                         <tr>
                                             <th>SL</th>
                                             <th>Deposit USDT</th>
-                                            <th>Withdraw USDT</th>
+                                            <th>Payout USDT</th>
+                                            <th>Payout HKD</th>
+                                            <th>Payout CNY</th>
                                             <th>Days</th>
                                             <th>Status</th>
                                             <th>Withdraw</th>
@@ -182,8 +268,30 @@ $db_handle = new DBController();
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
                                                 <td><?php echo $usdt_data[$i]["d_usdt"]; ?></td>
-                                                <td><?php echo $usdt_data[$i]["w_usdt"]; ?></td>
-                                                <td><?php echo $usdt_data[$i]["days"]; ?></td>
+                                                <td><?php
+                                                    $d_usdt = $usdt_data[$i]["d_usdt"];
+                                                    $w_usdt = $usdt_data[$i]["w_usdt"];
+
+                                                    if ($usdt_data[$i]["status"] == 'Pending') {
+
+                                                        $today = date("Y-m-d H:i:s");
+
+                                                        $earlier = new DateTime($today);
+                                                        $later = new DateTime($usdt_data[$i]["inserted_at"]);
+
+                                                        $days = $later->diff($earlier)->format("%a"); //3
+
+                                                        if ($days >= 7) {
+                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                        }
+
+                                                    }
+
+                                                    echo $w_usdt;
+                                                    ?></td>
+                                                <td><?php echo($w_usdt * 7.8); ?></td>
+                                                <td><?php echo($w_usdt * 6.96); ?></td>
+                                                <td><?php echo $days; ?></td>
                                                 <td>
                                                     <?php
                                                     if ($usdt_data[$i]["status"] == 'Pending') {
@@ -201,7 +309,8 @@ $db_handle = new DBController();
                                                     <?php
                                                     if ($usdt_data[$i]["status"] == 'Pending') {
                                                         ?>
-                                                        <a href="Update?withdrawId=<?php echo $usdt_data[$i]["id"]; ?>" class="btn btn-primary">Withdraw Available <span
+                                                        <a href="Update?withdrawId=<?php echo $usdt_data[$i]["id"]; ?>"
+                                                           class="btn btn-primary">Withdraw Available <span
                                                                     class="btn-icon-end"><i
                                                                         class="fa fa-star"></i></span>
                                                         </a>
