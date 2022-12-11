@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2022 at 11:30 AM
+-- Generation Time: Dec 11, 2022 at 08:34 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -44,7 +44,7 @@ CREATE TABLE `admin_login` (
 
 INSERT INTO `admin_login` (`id`, `name`, `ip`, `image`, `email`, `password`, `role`, `updated_at`) VALUES
 (1, 'Monoget Saha', '27.147.190.199', 'assets/images/admin/45219_image001.jpg', 'monoget1@gmail.com', '123456', 'admin', '2022-12-10 10:29:53'),
-(2, 'Super Admin', '103.107.160.134', 'public/images/profile/pic1.jpg', 'test@superadmin.com', '@BCD1234', 'admin', '2022-12-08 10:27:49');
+(2, 'Super Admin', '103.107.160.134', 'public/images/profile/pic1.jpg', 'test@usdt.com', '@BCD1234', 'admin', '2022-12-11 07:34:15');
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE `buysell` (
 --
 
 INSERT INTO `buysell` (`id`, `buy_price`, `sell_price`, `updated_at`) VALUES
-(1, 0.00, 0.00, '2022-12-10 10:07:52');
+(1, 0.00, 0.00, '2022-12-11 07:32:59');
 
 -- --------------------------------------------------------
 
@@ -76,6 +76,7 @@ CREATE TABLE `deposit_usdt` (
   `id` int(11) NOT NULL,
   `d_usdt` double(10,2) NOT NULL,
   `w_usdt` double(10,2) NOT NULL,
+  `usdt_price` double(10,2) NOT NULL,
   `days` int(11) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'Pending',
   `inserted_at` datetime NOT NULL,
