@@ -43,10 +43,28 @@ if (isset($_GET['withdrawId'])) {
         $usdt_data = $db_handle->runQuery("SELECT sum(amount) as withdraw_amount FROM withdraw_usdt where date='$today'");
         $amount = $usdt_data[0]['withdraw_amount'];
 
+        $deposit_data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id='{$id}'");
+
+        $d_usdt = $deposit_data[0]['d_usdt'];
+        $w_usdt = $deposit_data[0]['w_usdt'];
+
+        $today = date("Y-m-d H:i:s");
+
+        $earlier = new DateTime($today);
+        $later = new DateTime($deposit_data[0]["inserted_at"]);
+
+        $days = $later->diff($earlier)->format("%a"); //3
+
+        if ($days >= 7) {
+            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+        }
+
+        $amount += $w_usdt;
+
         if ($amount <= 3000000) {
             $update = $db_handle->insertQuery("update withdraw_usdt set amount= amount+'$amount' where date='$today'");
 
-            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw' where id='{$id}'");
+            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw', w_usdt='$w_usdt' where id='{$id}'");
 
             echo "<script>
                 document.cookie = 'alert = 3;';
@@ -60,12 +78,27 @@ if (isset($_GET['withdrawId'])) {
         }
     } else {
         $usdt_data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id='{$id}'");
-        $amount = $usdt_data[0]['w_usdt'];
+
+        $d_usdt = $usdt_data[0]['d_usdt'];
+        $w_usdt = $usdt_data[0]['w_usdt'];
+
+        $today = date("Y-m-d H:i:s");
+
+        $earlier = new DateTime($today);
+        $later = new DateTime($usdt_data[0]["inserted_at"]);
+
+        $days = $later->diff($earlier)->format("%a"); //3
+
+        if ($days >= 7) {
+            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+        }
+
+        $amount = $w_usdt;
 
         if ($amount <= 3000000) {
             $update = $db_handle->insertQuery("INSERT INTO `withdraw_usdt`(`date`, `amount`, `inserted_at`) VALUES ('$today','$amount','$inserted_at')");
 
-            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw' where id='{$id}'");
+            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw', w_usdt='$w_usdt' where id='{$id}'");
 
             echo "<script>
                 document.cookie = 'alert = 3;';
@@ -101,12 +134,12 @@ if (isset($_POST['updateProfile'])) {
 
     $name = $db_handle->checkValue($_POST['name']);
 
-    $image='';
-    $query='';
+    $image = '';
+    $query = '';
 
-    if (!empty($_FILES['image']['name'])){
+    if (!empty($_FILES['image']['name'])) {
         $RandomAccountNumber = mt_rand(1, 99999);
-        $file_name = $RandomAccountNumber."_" . $_FILES['image']['name'];
+        $file_name = $RandomAccountNumber . "_" . $_FILES['image']['name'];
         $file_size = $_FILES['image']['size'];
         $file_tmp = $_FILES['image']['tmp_name'];
 
@@ -121,13 +154,13 @@ if (isset($_POST['updateProfile'])) {
             $data = $db_handle->runQuery("select * FROM `admin_login` WHERE id='{$id}'");
             unlink($data[0]['image']);
 
-            move_uploaded_file($file_tmp, "assets/images/admin/" .$file_name);
+            move_uploaded_file($file_tmp, "assets/images/admin/" . $file_name);
             $image = 'assets/images/admin/' . $file_name;
-            $query.=",`image`='".$image."'";
+            $query .= ",`image`='" . $image . "'";
         }
     }
 
-    $update = $db_handle->insertQuery("UPDATE `admin_login` SET `name`='$name'".$query." WHERE `id`='{$id}'");
+    $update = $db_handle->insertQuery("UPDATE `admin_login` SET `name`='$name'" . $query . " WHERE `id`='{$id}'");
 
     echo "<script>
                 document.cookie = 'alert = 3;';
