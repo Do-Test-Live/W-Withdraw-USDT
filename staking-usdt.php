@@ -177,10 +177,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT Price</label>
+                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="usdt_price"
-                                                       placeholder="USDT Price" required>
+                                                       placeholder="USDT/HKD" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -222,6 +222,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <input type="text" class="form-control" name="sell_price"
                                                        value="<?php echo $data[0]["sell_price"]; ?>"
                                                        placeholder="Sell Price (USDT)" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="usdt_price"
+                                                       value="<?php echo $data[0]["usdt_price"]; ?>"
+                                                       placeholder="USDT/HKD" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
