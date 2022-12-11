@@ -19,11 +19,13 @@ if (isset($_POST['updateUSDT'])) {
 
     $usdt_price = $db_handle->checkValue($_POST['usdt_price']);
 
+    $cny_price = $db_handle->checkValue($_POST['cny_price']);
+
     $w_usdt = $d_usdt;
 
     $status = $db_handle->checkValue($_POST['status']);
 
-    $update = $db_handle->insertQuery("update deposit_usdt set d_usdt='$d_usdt',w_usdt='$w_usdt',days='$days',usdt_price='$usdt_price', status='$status' where id='{$id}'");
+    $update = $db_handle->insertQuery("update deposit_usdt set d_usdt='$d_usdt',w_usdt='$w_usdt',days='$days',usdt_price='$usdt_price',cny_price='$cny_price', status='$status' where id='{$id}'");
 
     echo "<script>
                 document.cookie = 'alert = 3;';

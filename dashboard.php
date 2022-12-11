@@ -2,6 +2,7 @@
 session_start();
 require_once("include/dbController.php");
 $db_handle = new DBController();
+date_default_timezone_set("Asia/Hong_Kong");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,10 +109,33 @@ $db_handle = new DBController();
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT sum(w_usdt) as total_usdt FROM deposit_usdt where status='Pending';");
+                                    $data = $db_handle->runQuery("SELECT * FROM deposit_usdt where status='Pending';");
 
-                                    if($data[0]["total_usdt"]!='')
-                                        echo ($data[0]["total_usdt"]*7.8);
+                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_usdt order by id desc");
+
+                                    $total = 0;
+
+                                    for ($i = 0; $i < $row_count; $i++) {
+
+                                        $d_usdt = $data[$i]['d_usdt'];
+                                        $w_usdt = $data[$i]['w_usdt'];
+
+                                        $today = date("Y-m-d H:i:s");
+
+                                        $earlier = new DateTime($today);
+                                        $later = new DateTime($data[$i]["inserted_at"]);
+
+                                        $days = $later->diff($earlier)->format("%a"); //3
+
+                                        if ($days >= 7) {
+                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                        }
+
+
+                                        $total += $w_usdt - $d_usdt;
+                                    }
+                                    if ($total != 0)
+                                        echo($total * 7.8);
                                     else
                                         echo '0.00';
                                     ?>
@@ -136,8 +160,8 @@ $db_handle = new DBController();
                                     <?php
                                     $data = $db_handle->runQuery("SELECT sum(d_usdt) as total_usdt FROM deposit_usdt;");
 
-                                    if($data[0]["total_usdt"]!='')
-                                        echo ($data[0]["total_usdt"]*7.8);
+                                    if ($data[0]["total_usdt"] != '')
+                                        echo($data[0]["total_usdt"] * 7.8);
                                     else
                                         echo '0.00';
                                     ?>
@@ -163,7 +187,7 @@ $db_handle = new DBController();
                                 <h2 class="text-white invoice-num">
                                     <?php
                                     $data = $db_handle->runQuery("SELECT * FROM buysell where id=1;");
-                                    echo ($data[0]["buy_price"]*7.8);
+                                    echo($data[0]["buy_price"] * 7.8);
                                     ?>
                                     HKD
                                 </h2>
@@ -185,7 +209,7 @@ $db_handle = new DBController();
                             </div>
                             <div>
                                 <h2 class="text-white invoice-num">
-                                    <?php echo ($data[0]["sell_price"]*7.8); ?>
+                                    <?php echo($data[0]["sell_price"] * 7.8); ?>
                                     HKD
                                 </h2>
                                 <span class="text-white fs-18">Today Sell Price</span>

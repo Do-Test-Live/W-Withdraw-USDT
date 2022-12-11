@@ -15,13 +15,15 @@ if (isset($_POST["depositUSDT"])) {
 
     $usdt_price = $db_handle->checkValue($_POST['usdt_price']);
 
+    $cny_price = $db_handle->checkValue($_POST['cny_price']);
+
     $days = $db_handle->checkValue($_POST['staking_days']);
 
     $w_usdt = $d_usdt;
 
     $inserted_at = date("Y-m-d H:i:s");
 
-    $insert = $db_handle->insertQuery("INSERT INTO `deposit_usdt`(`d_usdt`, `w_usdt`, `usdt_price`, `days`, `inserted_at`) VALUES ('$d_usdt','$w_usdt','$usdt_price','$days','$inserted_at')");
+    $insert = $db_handle->insertQuery("INSERT INTO `deposit_usdt`(`d_usdt`, `w_usdt`, `usdt_price`,`cny_price`, `days`, `inserted_at`) VALUES ('$d_usdt','$w_usdt','$usdt_price','$cny_price','$days','$inserted_at')");
 
     echo "<script>
                 document.cookie = 'alert = 3;';

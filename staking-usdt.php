@@ -128,6 +128,22 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="usdt_price"
+                                                       value="<?php echo $data[0]["usdt_price"]; ?>"
+                                                       placeholder="USDT/HKD">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT/CNY</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="cny_price"
+                                                       value="<?php echo $data[0]["cny_price"]; ?>"
+                                                       placeholder="USDT/CNY">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Status</label>
                                             <div class="col-sm-9">
                                                 <select class="default-select  form-control wide" name="status"
@@ -180,7 +196,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <label class="col-sm-3 col-form-label">USDT/HKD</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="usdt_price"
-                                                       placeholder="USDT/HKD" required>
+                                                       placeholder="USDT/HKD">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">USDT/CNY</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="cny_price"
+                                                       placeholder="USDT/CNY">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -222,14 +245,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <input type="text" class="form-control" name="sell_price"
                                                        value="<?php echo $data[0]["sell_price"]; ?>"
                                                        placeholder="Sell Price (USDT)" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="usdt_price"
-                                                       value="<?php echo $data[0]["usdt_price"]; ?>"
-                                                       placeholder="USDT/HKD" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
