@@ -10,22 +10,28 @@ if (!isset($_SESSION["userid"])) {
                 </script>";
 }
 
-if (isset($_POST['updateUSDT'])) {
+if (isset($_POST['updateCNY'])) {
     $id = $db_handle->checkValue($_POST['id']);
 
-    $d_usdt = $db_handle->checkValue($_POST['d_usdt']);
+    $client_name = $db_handle->checkValue($_POST['client_name']);
 
-    $days = $db_handle->checkValue($_POST['staking_days']);
+    $conversion_rate = $db_handle->checkValue($_POST['conversion_rate']);
 
-    $usdt_price = $db_handle->checkValue($_POST['usdt_price']);
+    $input_method = $db_handle->checkValue($_POST['input_method']);
 
-    $cny_price = $db_handle->checkValue($_POST['cny_price']);
+    $bank_name = $db_handle->checkValue($_POST['bank_name']);
 
-    $w_usdt = $d_usdt;
+    $bank_holder = $db_handle->checkValue($_POST['bank_holder']);
+
+    $amount = $db_handle->checkValue($_POST['amount']);
+
+    $w_amount = $amount;
+
+    $staking_days = $db_handle->checkValue($_POST['staking_days']);
 
     $status = $db_handle->checkValue($_POST['status']);
 
-    $update = $db_handle->insertQuery("update deposit_usdt set d_usdt='$d_usdt',w_usdt='$w_usdt',days='$days',usdt_price='$usdt_price',cny_price='$cny_price', status='$status' where id='{$id}'");
+    $update = $db_handle->insertQuery("update deposit_cny set client_name='$client_name',conversion_rate='$conversion_rate',input_method='$input_method',bank_name='$bank_name',bank_holder='$bank_holder',amount='$amount',w_amount='$w_amount',staking_days='$staking_days',status='$status' where id='{$id}'");
 
     echo "<script>
                 document.cookie = 'alert = 3;';
@@ -47,10 +53,10 @@ if (isset($_GET['withdrawId'])) {
         $usdt_data = $db_handle->runQuery("SELECT sum(amount) as withdraw_amount FROM withdraw_usdt where date='$today'");
         $amount = $usdt_data[0]['withdraw_amount'];
 
-        $deposit_data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id='{$id}'");
+        $deposit_data = $db_handle->runQuery("SELECT * FROM deposit_cny where id='{$id}'");
 
-        $d_usdt = $deposit_data[0]['d_usdt'];
-        $w_usdt = $deposit_data[0]['w_usdt'];
+        $d_usdt = $deposit_data[0]['amount'];
+        $w_usdt = $deposit_data[0]['w_amount'];
 
         $today = date("Y-m-d H:i:s");
 
@@ -65,10 +71,10 @@ if (isset($_GET['withdrawId'])) {
 
         $amount += $w_usdt;
 
-        if ($amount <= 3000000) {
+        if ($amount <= 2000000) {
             $update = $db_handle->insertQuery("update withdraw_usdt set amount= amount+'$amount' where date='$today'");
 
-            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw', w_usdt='$w_usdt' where id='{$id}'");
+            $update_deposit = $db_handle->insertQuery("update deposit_cny set status= 'Approve', w_amount='$w_usdt' where id='{$id}'");
 
             echo "<script>
                 document.cookie = 'alert = 3;';
@@ -81,10 +87,10 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         }
     } else {
-        $usdt_data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id='{$id}'");
+        $usdt_data = $db_handle->runQuery("SELECT * FROM deposit_cny where id='{$id}'");
 
-        $d_usdt = $usdt_data[0]['d_usdt'];
-        $w_usdt = $usdt_data[0]['w_usdt'];
+        $d_usdt = $usdt_data[0]['amount'];
+        $w_usdt = $usdt_data[0]['w_amount'];
 
         $today = date("Y-m-d H:i:s");
 
@@ -99,10 +105,10 @@ if (isset($_GET['withdrawId'])) {
 
         $amount = $w_usdt;
 
-        if ($amount <= 3000000) {
+        if ($amount <= 2000000) {
             $update = $db_handle->insertQuery("INSERT INTO `withdraw_usdt`(`date`, `amount`, `inserted_at`) VALUES ('$today','$amount','$inserted_at')");
 
-            $update_deposit = $db_handle->insertQuery("update deposit_usdt set status= 'Withdraw', w_usdt='$w_usdt' where id='{$id}'");
+            $update_deposit = $db_handle->insertQuery("update deposit_cny set status= 'Approve', w_amount='$w_usdt' where id='{$id}'");
 
             echo "<script>
                 document.cookie = 'alert = 3;';

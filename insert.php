@@ -10,20 +10,26 @@ if (!isset($_SESSION["userid"])) {
                 </script>";
 }
 
-if (isset($_POST["depositUSDT"])) {
-    $d_usdt = $db_handle->checkValue($_POST['d_usdt']);
+if (isset($_POST["depositCNY"])) {
+    $client_name = $db_handle->checkValue($_POST['client_name']);
 
-    $usdt_price = $db_handle->checkValue($_POST['usdt_price']);
+    $conversion_rate = $db_handle->checkValue($_POST['conversion_rate']);
 
-    $cny_price = $db_handle->checkValue($_POST['cny_price']);
+    $input_method = $db_handle->checkValue($_POST['input_method']);
 
-    $days = $db_handle->checkValue($_POST['staking_days']);
+    $bank_name = $db_handle->checkValue($_POST['bank_name']);
 
-    $w_usdt = $d_usdt;
+    $bank_holder = $db_handle->checkValue($_POST['bank_holder']);
+
+    $amount = $db_handle->checkValue($_POST['amount']);
+
+    $w_amount = $amount;
+
+    $staking_days = $db_handle->checkValue($_POST['staking_days']);
 
     $inserted_at = date("Y-m-d H:i:s");
 
-    $insert = $db_handle->insertQuery("INSERT INTO `deposit_usdt`(`d_usdt`, `w_usdt`, `usdt_price`,`cny_price`, `days`, `inserted_at`) VALUES ('$d_usdt','$w_usdt','$usdt_price','$cny_price','$days','$inserted_at')");
+    $insert = $db_handle->insertQuery("INSERT INTO `deposit_cny`(`client_name`, `conversion_rate`, `input_method`, `bank_name`, `bank_holder`, `amount`, `w_amount`, `staking_days`, `inserted_at`) VALUES ('$client_name','$conversion_rate','$input_method','$bank_name','$bank_holder','$amount','$w_amount','$staking_days','$inserted_at')");
 
     echo "<script>
                 document.cookie = 'alert = 3;';

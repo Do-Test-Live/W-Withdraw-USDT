@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>USDT | USDT</title>
+    <title>CNY | USDT</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -71,7 +71,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            USDT
+                            CNY
                         </div>
                     </div>
                 </div>
@@ -101,46 +101,70 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Update Staking USDT</h4>
+                                <h4 class="card-title">Update Staking CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
                                     <form method="post" action="Update">
 
-                                        <?php $data = $db_handle->runQuery("SELECT * FROM deposit_usdt where id={$_GET['depositId']}"); ?>
+                                        <?php $data = $db_handle->runQuery("SELECT * FROM deposit_cny where id={$_GET['depositId']}"); ?>
 
                                         <input type="hidden" value="<?php echo $data[0]["id"]; ?>" name="id" required>
 
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT</label>
+                                            <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="d_usdt"
-                                                       placeholder="USDT"
-                                                       value="<?php echo $data[0]["d_usdt"]; ?>" required>
+                                                <input type="text" class="form-control" name="client_name"
+                                                       placeholder="Client Name"
+                                                       value="<?php echo $data[0]["client_name"]; ?>" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
+                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="conversion_rate"
+                                                       placeholder="CNY/HKD Rate"
+                                                       value="<?php echo $data[0]["conversion_rate"]; ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Input Method</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="input_method"
+                                                       value="<?php echo $data[0]["input_method"]; ?>"
+                                                       placeholder="Input Method">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_name"
+                                                       value="<?php echo $data[0]["bank_name"]; ?>"
+                                                       placeholder="Bank Name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_holder"
+                                                       value="<?php echo $data[0]["bank_holder"]; ?>"
+                                                       placeholder="Bank Holder">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="amount"
+                                                       value="<?php echo $data[0]["amount"]; ?>"
+                                                       placeholder="Amount">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10 etc.)</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="staking_days"
-                                                       placeholder="Staking Days (T3,T7,T10,T30)"
-                                                       value="<?php echo $data[0]["days"]; ?>" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="usdt_price"
-                                                       value="<?php echo $data[0]["usdt_price"]; ?>"
-                                                       placeholder="USDT/HKD">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT/CNY</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="cny_price"
-                                                       value="<?php echo $data[0]["cny_price"]; ?>"
-                                                       placeholder="USDT/CNY">
+                                                       value="<?php echo $data[0]["staking_days"]; ?>"
+                                                       placeholder="Staking Days (T3, T7, T10 etc.)">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -151,8 +175,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <option value="Pending" <?php echo ($data[0]["status"] == 'Pending') ? "selected" : ""; ?>>
                                                         Pending
                                                     </option>
-                                                    <option value="Withdraw" <?php echo ($data[0]["status"] == 'Withdraw') ? "selected" : ""; ?>>
-                                                        Withdraw
+                                                    <option value="Withdraw" <?php echo ($data[0]["status"] == 'Approve') ? "selected" : ""; ?>>
+                                                        Approve
                                                     </option>
                                                 </select>
                                             </div>
@@ -160,7 +184,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
                                                 <button type="submit" class="btn btn-primary w-25"
-                                                        name="updateUSDT">Submit
+                                                        name="updateCNY">Submit
                                                 </button>
                                             </div>
                                         </div>
@@ -173,42 +197,63 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Deposit USDT</h4>
+                                <h4 class="card-title">Stake CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
                                     <form action="Insert" method="post">
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT</label>
+                                            <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="d_usdt" placeholder="USDT"
+                                                <input type="text" class="form-control" name="client_name" placeholder="Client Name"
                                                        required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Staking Days (T3,T7,T10,T30)</label>
+                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="conversion_rate" placeholder="CNY/HKD Rate"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Input Method</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="input_method"
+                                                       placeholder="Input Method">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_name"
+                                                       placeholder="Bank Name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_holder"
+                                                       placeholder="Bank Holder">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="amount"
+                                                       placeholder="Amount">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10 etc.)</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="staking_days"
-                                                       placeholder="Staking Days: 7, 10, 30 etc." required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT/HKD</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="usdt_price"
-                                                       placeholder="USDT/HKD">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">USDT/CNY</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="cny_price"
-                                                       placeholder="USDT/CNY">
+                                                       placeholder="Staking Days (T3, T7, T10 etc.)">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
-                                                <button type="submit" class="btn btn-primary w-25" name="depositUSDT">
+                                                <button type="submit" class="btn btn-primary w-25" name="depositCNY">
                                                     Submit
                                                 </button>
                                             </div>
@@ -263,7 +308,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Staking USDT</h4>
+                                <h4 class="card-title">Staking CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -271,11 +316,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>Deposit USDT</th>
-                                            <th>Payout USDT</th>
+                                            <th>Client Name</th>
+                                            <th>Conversion Rate</th>
+                                            <th>Input Method</th>
+                                            <th>Bank Name</th>
+                                            <th>Bank Holder</th>
+                                            <th>Deposit CNY</th>
                                             <th>Payout HKD</th>
-                                            <th>Payout CNY</th>
-                                            <th>Days</th>
+                                            <th>Staking Days</th>
                                             <th>Status</th>
                                             <th>Withdraw</th>
                                             <th>Action</th>
@@ -283,24 +331,29 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $usdt_data = $db_handle->runQuery("SELECT * FROM deposit_usdt order by id desc");
-                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_usdt order by id desc");
+                                        $cny_data = $db_handle->runQuery("SELECT * FROM deposit_cny order by id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
 
                                         for ($i = 0; $i < $row_count; $i++) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
-                                                <td><?php echo $usdt_data[$i]["d_usdt"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["client_name"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["input_method"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["bank_name"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["bank_holder"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["amount"]; ?></td>
                                                 <td><?php
-                                                    $d_usdt = $usdt_data[$i]["d_usdt"];
-                                                    $w_usdt = $usdt_data[$i]["w_usdt"];
+                                                    $d_usdt = $cny_data[$i]["amount"];
+                                                    $w_usdt = $cny_data[$i]["w_amount"];
 
-                                                    if ($usdt_data[$i]["status"] == 'Pending') {
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
 
                                                         $today = date("Y-m-d H:i:s");
 
                                                         $earlier = new DateTime($today);
-                                                        $later = new DateTime($usdt_data[$i]["inserted_at"]);
+                                                        $later = new DateTime($cny_data[$i]["inserted_at"]);
 
                                                         $days = $later->diff($earlier)->format("%a"); //3
 
@@ -311,28 +364,28 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     }
 
                                                     echo $w_usdt;
-                                                    ?></td>
-                                                <td><?php echo($w_usdt * 7.8); ?></td>
-                                                <td><?php echo($w_usdt * 6.96); ?></td>
+                                                    ?>
+                                                </td>
+                                                <td><?php echo($w_usdt * $cny_data[$i]["conversion_rate"]); ?></td>
                                                 <td><?php echo $days; ?></td>
                                                 <td>
                                                     <?php
-                                                    if ($usdt_data[$i]["status"] == 'Pending') {
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
                                                         ?>
                                                         <span class="badge light badge-info">Pending</span>
                                                         <?php
                                                     } else {
                                                         ?>
-                                                        <span class="badge light badge-success">Withdraw</span>
+                                                        <span class="badge light badge-success">Approve</span>
                                                         <?php
                                                     }
                                                     ?>
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    if ($usdt_data[$i]["status"] == 'Pending') {
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
                                                         ?>
-                                                        <a href="Update?withdrawId=<?php echo $usdt_data[$i]["id"]; ?>"
+                                                        <a href="Update?withdrawId=<?php echo $cny_data[$i]["id"]; ?>"
                                                            class="btn btn-primary">Withdraw Available <span
                                                                     class="btn-icon-end"><i
                                                                         class="fa fa-star"></i></span>
@@ -350,10 +403,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 </td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        <a href="Staking-USDT?depositId=<?php echo $usdt_data[$i]["id"]; ?>"
+                                                        <a href="Staking-USDT?depositId=<?php echo $cny_data[$i]["id"]; ?>"
                                                            class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>
-                                                        <a onclick="usdtDelete(<?php echo $usdt_data[$i]["id"]; ?>);"
+                                                        <a onclick="usdtDelete(<?php echo $cny_data[$i]["id"]; ?>);"
                                                            class="btn btn-danger shadow btn-xs sharp"><i
                                                                     class="fa fa-trash"></i></a>
                                                     </div>

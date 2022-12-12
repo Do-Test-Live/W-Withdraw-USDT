@@ -109,16 +109,16 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_usdt where status='Pending';");
+                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Pending';");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_usdt order by id desc");
+                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
 
                                     $total = 0;
 
                                     for ($i = 0; $i < $row_count; $i++) {
 
-                                        $d_usdt = $data[$i]['d_usdt'];
-                                        $w_usdt = $data[$i]['w_usdt'];
+                                        $d_usdt = $data[$i]['amount'];
+                                        $w_usdt = $data[$i]['w_amount'];
 
                                         $today = date("Y-m-d H:i:s");
 
@@ -132,10 +132,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         }
 
 
-                                        $total += $w_usdt - $d_usdt;
+                                        $total += ($w_usdt - $d_usdt) * $data[$i]['conversion_rate'];
                                     }
                                     if ($total != 0)
-                                        echo($total * 7.8);
+                                        echo $total;
                                     else
                                         echo '0.00';
                                     ?>
@@ -158,10 +158,18 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT sum(d_usdt) as total_usdt FROM deposit_usdt;");
+                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
 
-                                    if ($data[0]["total_usdt"] != '')
-                                        echo($data[0]["total_usdt"] * 7.8);
+                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
+
+                                    $total = 0;
+
+                                    for ($i = 0; $i < $row_count; $i++) {
+                                        $total += $data[$i]['amount'] * $data[$i]['conversion_rate'];
+                                    }
+
+                                    if ($total != 0)
+                                        echo $total;
                                     else
                                         echo '0.00';
                                     ?>
