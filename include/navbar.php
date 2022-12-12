@@ -44,7 +44,7 @@
             <li>
                 <a class="ai-icon" href="Staking-USDT" aria-expanded="false">
                     <i class="flaticon-041-graph"></i>
-                    <span class="nav-text">USDT</span>
+                    <span class="nav-text">CNY</span>
                 </a>
             </li>
         </ul>
