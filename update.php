@@ -19,6 +19,8 @@ if (isset($_POST['updateCNY'])) {
 
     $input_method = $db_handle->checkValue($_POST['input_method']);
 
+    $account_number = $db_handle->checkValue($_POST['account_number']);
+
     $bank_name = $db_handle->checkValue($_POST['bank_name']);
 
     $bank_holder = $db_handle->checkValue($_POST['bank_holder']);
@@ -31,7 +33,7 @@ if (isset($_POST['updateCNY'])) {
 
     $status = $db_handle->checkValue($_POST['status']);
 
-    $update = $db_handle->insertQuery("update deposit_cny set client_name='$client_name',conversion_rate='$conversion_rate',input_method='$input_method',bank_name='$bank_name',bank_holder='$bank_holder',amount='$amount',w_amount='$w_amount',staking_days='$staking_days',status='$status' where id='{$id}'");
+    $update = $db_handle->insertQuery("update deposit_cny set client_name='$client_name',conversion_rate='$conversion_rate',input_method='$input_method',account_number='$account_number',bank_name='$bank_name',bank_holder='$bank_holder',amount='$amount',w_amount='$w_amount',staking_days='$staking_days',status='$status' where id='{$id}'");
 
     echo "<script>
                 document.cookie = 'alert = 3;';

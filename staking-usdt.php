@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>CNY | USDT</title>
+    <title>CNY | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -136,6 +136,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Account Number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="account_number"
+                                                       value="<?php echo $data[0]["account_number"]; ?>"
+                                                       placeholder="Account Number">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Bank Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="bank_name"
@@ -221,6 +229,13 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="input_method"
                                                        placeholder="Input Method">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Account Number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="account_number"
+                                                       placeholder="Account Number">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -319,6 +334,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Client Name</th>
                                             <th>Conversion Rate</th>
                                             <th>Input Method</th>
+                                            <th>Account Number</th>
                                             <th>Bank Name</th>
                                             <th>Bank Holder</th>
                                             <th>Deposit CNY</th>
@@ -341,6 +357,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $cny_data[$i]["client_name"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["input_method"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["account_number"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["bank_name"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["bank_holder"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["amount"]; ?></td>
@@ -363,10 +380,9 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     }
 
-                                                    echo $w_usdt;
+                                                    echo ($w_usdt * $cny_data[$i]["conversion_rate"]);
                                                     ?>
                                                 </td>
-                                                <td><?php echo($w_usdt * $cny_data[$i]["conversion_rate"]); ?></td>
                                                 <td><?php echo $days; ?></td>
                                                 <td>
                                                     <?php
@@ -386,16 +402,13 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     if ($cny_data[$i]["status"] == 'Pending') {
                                                         ?>
                                                         <a href="Update?withdrawId=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-primary">Withdraw Available <span
-                                                                    class="btn-icon-end"><i
-                                                                        class="fa fa-star"></i></span>
+                                                           class="btn btn-primary">Withdraw Available
                                                         </a>
                                                         <?php
                                                     } else {
                                                         ?>
                                                         <button type="button" class="btn btn-success">Withdraw
-                                                            Successful <span class="btn-icon-end"><i
-                                                                        class="fa fa-check"></i></span>
+                                                            Successful
                                                         </button>
                                                         <?php
                                                     }

@@ -20,7 +20,7 @@ $db_handle = new DBController();
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Profile | USDT</title>
+    <title>Profile | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 

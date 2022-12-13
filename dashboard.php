@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Dashboard | USDT</title>
+    <title>Dashboard | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 

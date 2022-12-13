@@ -45,10 +45,10 @@ if(isset($_SESSION["userid"])){
     <meta property="og:description" content="USDT"/>
 	<meta property="og:image" content="social-image.png" />
 	<meta name="format-detection" content="telephone=no">
-	
+
 	<!-- PAGE TITLE HERE -->
-    <title>Login | USDT</title>
-	
+    <title>Login | CNY/HKD</title>
+
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="public/images/favicon.png" />
     <link href="public/css/style.css" rel="stylesheet">
@@ -75,7 +75,7 @@ if(isset($_SESSION["userid"])){
                             <div class="col-xl-12">
                                 <div class="auth-form">
 									<div class="text-center mb-3">
-                                        <h1>USDT</h1>
+                                        <h1>CNY/HKD</h1>
 									</div>
                                     <h4 class="text-center mb-4">Sign in your account</h4>
                                     <form action="Login" method="post">

@@ -3,8 +3,8 @@
 ***********************************-->
 <div class="nav-header">
     <a href="Dashboard" class="brand-logo">
-        <div class="logo-abbr" width="53" height="53">
-            <img src="public/images/logo.png" class="img-fluid" alt=""/>
+        <div class="logo-abbr" width="53px" height="53px">
+            <img src="public/images/logo-text.png" class="img-fluid" alt=""/>
         </div>
         <div class="brand-title mb-3" width="124px" height="33px">
             <img src="public/images/logo-text.png" class="img-fluid" alt=""/>
