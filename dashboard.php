@@ -118,21 +118,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     for ($i = 0; $i < $row_count; $i++) {
 
                                         $d_usdt = $data[$i]['amount'];
-                                        $w_usdt = $data[$i]['w_amount'];
 
-                                        $today = date("Y-m-d H:i:s");
-
-                                        $earlier = new DateTime($today);
-                                        $later = new DateTime($data[$i]["inserted_at"]);
-
-                                        $days = $later->diff($earlier)->format("%a"); //3
-
-                                        if ($days >= 7) {
-                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
-                                        }
-
-
-                                        $total += ($w_usdt - $d_usdt) * $data[$i]['conversion_rate'];
+                                        $total += $d_usdt * $data[$i]['conversion_rate'];
                                     }
                                     if ($total != 0)
                                         echo $total;
@@ -158,9 +145,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
+                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Approve';");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
+                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny where status='Approve'; order by id desc");
 
                                     $total = 0;
 

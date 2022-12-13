@@ -290,6 +290,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Bank Holder</th>
                                             <th>Deposit CNY</th>
                                             <th>Payout HKD</th>
+                                            <th>Stake Plan</th>
                                             <th>Days Left</th>
                                             <th>Status</th>
                                             <th>Withdraw</th>
@@ -333,7 +334,9 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     echo ($w_usdt * $cny_data[$i]["conversion_rate"]);
                                                     ?>
+
                                                 </td>
+                                                <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["staking_days"]-$days; ?></td>
                                                 <td>
                                                     <?php
