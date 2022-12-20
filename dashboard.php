@@ -109,7 +109,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Pending';");
+                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
 
                                     $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
 
@@ -126,9 +126,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     else
                                         echo '0.00';
                                     ?>
-                                    HKD
+                                    HKD/CNY
                                 </h2>
-                                <span class="text-white fs-18">Total Withdraw Remaining</span>
+                                <span class="text-white fs-18">Total Input Amount</span>
                             </div>
                         </div>
                     </div>
@@ -147,12 +147,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     <?php
                                     $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Approve';");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny where status='Approve'; order by id desc");
+                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny where status='Approve' order by id desc;");
 
                                     $total = 0;
 
                                     for ($i = 0; $i < $row_count; $i++) {
-                                        $total += $data[$i]['amount'] * $data[$i]['conversion_rate'];
+                                        $total += $data[$i]['w_amount'] * $data[$i]['conversion_rate'];
                                     }
 
                                     if ($total != 0)
@@ -160,9 +160,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     else
                                         echo '0.00';
                                     ?>
-                                    HKD
+                                    HKD/CNY
                                 </h2>
-                                <span class="text-white fs-18">Total Staking Amount</span>
+                                <span class="text-white fs-18">Total Output Amount Approve</span>
                             </div>
                         </div>
                     </div>

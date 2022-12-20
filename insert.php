@@ -29,9 +29,11 @@ if (isset($_POST["depositCNY"])) {
 
     $staking_days = $db_handle->checkValue($_POST['staking_days']);
 
+    $transfer_fee = $db_handle->checkValue($_POST['transfer_fee']);
+
     $inserted_at = date("Y-m-d H:i:s");
 
-    $insert = $db_handle->insertQuery("INSERT INTO `deposit_cny`(`client_name`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`, `w_amount`, `staking_days`, `inserted_at`) VALUES ('$client_name','$conversion_rate','$input_method','$account_number','$bank_name','$bank_holder','$amount','$w_amount','$staking_days','$inserted_at')");
+    $insert = $db_handle->insertQuery("INSERT INTO `deposit_cny`(`client_name`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`, `w_amount`, `staking_days`,`transfer_fee`, `inserted_at`) VALUES ('$client_name','$conversion_rate','$input_method','$account_number','$bank_name','$bank_holder','$amount','$w_amount','$staking_days','$transfer_fee','$inserted_at')");
 
     echo "<script>
                 document.cookie = 'alert = 3;';
