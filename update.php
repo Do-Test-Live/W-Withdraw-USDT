@@ -29,11 +29,11 @@ if (isset($_POST['updateCNY'])) {
 
     $w_amount = $amount;
 
-    $transfer_fee = $db_handle->checkValue($_POST['transfer_fee']);
+    $transferee = $db_handle->checkValue($_POST['transferee']);
 
     $status = $db_handle->checkValue($_POST['status']);
 
-    $update = $db_handle->insertQuery("update deposit_cny set client_name='$client_name',conversion_rate='$conversion_rate',input_method='$input_method',account_number='$account_number',bank_name='$bank_name',bank_holder='$bank_holder',amount='$amount',w_amount='$w_amount',transfer_fee='$transfer_fee',status='$status' where id='{$id}'");
+    $update = $db_handle->insertQuery("update deposit_cny set client_name='$client_name',conversion_rate='$conversion_rate',input_method='$input_method',account_number='$account_number',bank_name='$bank_name',bank_holder='$bank_holder',amount='$amount',w_amount='$w_amount',transferee='$transferee',status='$status' where id='{$id}'");
 
     echo "<script>
                 document.cookie = 'alert = 3;';

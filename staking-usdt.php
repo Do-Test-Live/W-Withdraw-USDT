@@ -120,6 +120,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Transferee</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="transferee"
+                                                       value="<?php echo $data[0]["transferee"]; ?>"
+                                                       placeholder="Transferee">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="conversion_rate"
@@ -168,14 +176,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transfer Fee</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transfer_fee"
-                                                       value="<?php echo $data[0]["transfer_fee"]; ?>"
-                                                       placeholder="Transfer Fee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Status</label>
                                             <div class="col-sm-9">
                                                 <select class="default-select  form-control wide" name="status"
@@ -215,6 +215,13 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="client_name" placeholder="Client Name"
                                                        required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Transferee</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="transferee"
+                                                       placeholder="Transferee">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -267,13 +274,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transfer Fee</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transfer_fee"
-                                                       placeholder="Transfer Fee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
                                                 <button type="submit" class="btn btn-primary w-25" name="depositCNY">
                                                     Submit
@@ -298,6 +298,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <tr>
                                             <th>SL</th>
                                             <th>Client Name</th>
+                                            <th>Transferee</th>
                                             <th>HKD/CNY</th>
                                             <th>Input Method</th>
                                             <th>Account Number</th>
@@ -307,7 +308,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Payout HKD</th>
                                             <th>Stake Plan</th>
                                             <th>Days Left</th>
-                                            <th>Transfer Fee</th>
                                             <th>Status</th>
                                             <th>Withdraw</th>
                                             <th>Action</th>
@@ -323,6 +323,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
                                                 <td><?php echo $cny_data[$i]["client_name"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["transferee"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["input_method"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["account_number"]; ?></td>
@@ -348,13 +349,12 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     }
 
-                                                    echo ($w_usdt * $cny_data[$i]["conversion_rate"]);
+                                                    echo round(($w_usdt / $cny_data[$i]["conversion_rate"]),4);
                                                     ?>
 
                                                 </td>
                                                 <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["staking_days"]-$days; ?></td>
-                                                <td><?php echo $cny_data[$i]["transfer_fee"]; ?></td>
                                                 <td>
                                                     <?php
                                                     if ($cny_data[$i]["status"] == 'Pending') {

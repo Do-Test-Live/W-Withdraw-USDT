@@ -119,10 +119,10 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                         $d_usdt = $data[$i]['amount'];
 
-                                        $total += $d_usdt * $data[$i]['conversion_rate'];
+                                        $total += $d_usdt / $data[$i]['conversion_rate'];
                                     }
                                     if ($total != 0)
-                                        echo $total;
+                                        echo round($total,4);
                                     else
                                         echo '0.00';
                                     ?>
@@ -152,11 +152,11 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     $total = 0;
 
                                     for ($i = 0; $i < $row_count; $i++) {
-                                        $total += $data[$i]['w_amount'] * $data[$i]['conversion_rate'];
+                                        $total += $data[$i]['w_amount'] / $data[$i]['conversion_rate'];
                                     }
 
                                     if ($total != 0)
-                                        echo $total;
+                                        echo round($total,4);
                                     else
                                         echo '0.00';
                                     ?>
