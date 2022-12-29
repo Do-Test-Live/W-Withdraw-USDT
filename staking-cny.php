@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Client | CNY/HKD</title>
+    <title>CNY | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -71,7 +71,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            Client
+                            CNY
                         </div>
                     </div>
                 </div>
@@ -205,13 +205,13 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Add Client</h4>
+                                <h4 class="card-title">Stake CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
                                     <form action="Insert" method="post">
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="client_name"
                                                        placeholder="Client Name"
@@ -219,32 +219,61 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Phone <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Transferee</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="phone"
-                                                       placeholder="Phone"
+                                                <input type="text" class="form-control" name="transferee"
+                                                       placeholder="Transferee">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="conversion_rate"
+                                                       placeholder="CNY/HKD Rate"
                                                        required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 1 (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Input Method</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       placeholder="Transferee">
+                                                <input type="text" class="form-control" name="input_method"
+                                                       placeholder="Input Method">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 2 (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Account Number</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       placeholder="Transferee">
+                                                <input type="text" class="form-control" name="account_number"
+                                                       placeholder="Account Number">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 3 (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Bank Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       placeholder="Transferee">
+                                                <input type="text" class="form-control" name="bank_name"
+                                                       placeholder="Bank Name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_holder"
+                                                       placeholder="Bank Holder">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="amount"
+                                                       placeholder="Amount">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10
+                                                etc.)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="staking_days"
+                                                       placeholder="Staking Days (T3, T7, T10 etc.)">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -259,10 +288,11 @@ date_default_timezone_set("Asia/Hong_Kong");
                             </div>
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Client Balance Record</h4>
+                                <h4 class="card-title">Staking CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -272,43 +302,133 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>SL</th>
                                             <th>Client Name</th>
                                             <th>Transferee</th>
-                                            <th>Total Balance</th>
-                                            <th>View Records</th>
+                                            <th>HKD/CNY</th>
+                                            <th>Input Method</th>
+                                            <th>Account Number</th>
+                                            <th>Bank Name</th>
+                                            <th>Bank Holder</th>
+                                            <th>Deposit CNY</th>
+                                            <th>Payout HKD</th>
+                                            <th>Stake Plan</th>
+                                            <th>Days Left</th>
+                                            <th>Status</th>
+                                            <th>Withdraw</th>
+                                            <th>Inserted Time</th>
+                                            <th>Updated Time</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $client = $db_handle->runQuery("SELECT * FROM client order by id desc");
-                                        $row_count = $db_handle->numRows("SELECT * FROM client order by id desc");
+                                        $cny_data = $db_handle->runQuery("SELECT * FROM deposit_cny order by id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
 
                                         for ($i = 0; $i < $row_count; $i++) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
-                                                <td><?php echo $client[$i]["client_name"]; ?></td>
-                                                <td><?php echo $client[$i]["trasferee"]; ?></td>
-                                                <td>
-                                                    <?php
+                                                <td><?php echo $cny_data[$i]["client_name"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["transferee"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["input_method"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["account_number"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["bank_name"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["bank_holder"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["amount"]; ?></td>
+                                                <td><?php
+                                                    $d_usdt = $cny_data[$i]["amount"];
+                                                    $w_usdt = $cny_data[$i]["w_amount"];
 
-                                                    $balance= $db_handle->runQuery("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
-                                                    $row = $db_handle->numRows("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
-                                                    $total=0;
-                                                    for($j=0;$j<$row;$j++){
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
 
-                                                        if($balance[$j]["balance_type"]=='Deposit'){
-                                                            $total+=$balance[$j]["balance"]/$balance[$j]["conversion_rate"];
-                                                        }else{
-                                                            $total-=$balance[$j]["balance"]/$balance[$j]["conversion_rate"];
+                                                        $today = date("Y-m-d H:i:s");
+
+                                                        $earlier = new DateTime($today);
+                                                        $later = new DateTime($cny_data[$i]["inserted_at"]);
+
+                                                        $days = $later->diff($earlier)->format("%a"); //3
+
+                                                        if ($days >= 7) {
+                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
                                                         }
 
                                                     }
 
-                                                    echo round($total, 4);
+                                                    echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
+                                                    ?>
+
+                                                </td>
+                                                <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["staking_days"] - $days; ?></td>
+                                                <td>
+                                                    <?php
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
+                                                        ?>
+                                                        <span class="badge light badge-info">Pending</span>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <span class="badge light badge-success">Approve</span>
+                                                        <?php
+                                                    }
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg"><i
-                                                                class="fa fa-eye" onclick="showRecord(<?php echo $client[$i]["id"]; ?>,'<?php echo $client[$i]["client_name"]; ?>');"></i></button>
+                                                    <?php
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
+                                                        ?>
+                                                        <a href="Update?withdrawId=<?php echo $cny_data[$i]["id"]; ?>"
+                                                           class="btn btn-primary">Withdraw Available
+                                                        </a>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success">Withdraw
+                                                            Successful
+                                                        </button>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $insert_time = new DateTime($cny_data[$i]["inserted_at"]);
+
+                                                    $new = $insert_time->format('d/m/Y h:i:s a');
+
+                                                    echo $new;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+
+                                                    $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["updated_at"] . ' + 8 hours'));
+
+                                                    $update_time = new DateTime($newDate);
+
+                                                    $update = $update_time->format('d/m/Y h:i:s a');
+
+                                                    if ($new != $update) {
+                                                        echo $update;
+                                                    }
+
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <?php
+                                                        if ($cny_data[$i]["status"] == 'Approve') {
+                                                            ?>
+                                                            <a href="Update?undodepositId=<?php echo $cny_data[$i]["id"]; ?>"
+                                                               class="btn btn-success shadow btn-xs sharp me-1"><i class="fa fa-undo"></i></i></a>
+                                                        <?php } ?>
+                                                        <a href="Staking-USDT?depositId=<?php echo $cny_data[$i]["id"]; ?>"
+                                                           class="btn btn-primary shadow btn-xs sharp me-1"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                        <a onclick="usdtDelete(<?php echo $cny_data[$i]["id"]; ?>);"
+                                                           class="btn btn-danger shadow btn-xs sharp"><i
+                                                                    class="fa fa-trash"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <?php
@@ -321,27 +441,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                         </div>
                     </div>
                 <?php } ?>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">View Record <span class="h4" id="client_name"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12" id="viewRecord">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
@@ -417,22 +516,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                 });
             }
         })
-    }
-</script>
-<script>
-    async function showRecord(id,name) {
-        $.ajax({
-            type: "POST",
-            url: "View-Record",
-            data: {id: id},
-            success:async function(msg){
-                $("#viewRecord").html(msg)
-                $("#client_name").html(name)
-            },
-            error: function(){
-                alert("failure");
-            }
-        });
     }
 </script>
 </body>
