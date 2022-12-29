@@ -213,7 +213,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="client_name" placeholder="Client Name"
+                                                <input type="text" class="form-control" name="client_name"
+                                                       placeholder="Client Name"
                                                        required>
                                             </div>
                                         </div>
@@ -227,7 +228,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="conversion_rate" placeholder="CNY/HKD Rate"
+                                                <input type="text" class="form-control" name="conversion_rate"
+                                                       placeholder="CNY/HKD Rate"
                                                        required>
                                             </div>
                                         </div>
@@ -267,7 +269,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10 etc.)</label>
+                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10
+                                                etc.)</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="staking_days"
                                                        placeholder="Staking Days (T3, T7, T10 etc.)">
@@ -310,6 +313,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Days Left</th>
                                             <th>Status</th>
                                             <th>Withdraw</th>
+                                            <th>Inserted Time</th>
+                                            <th>Updated Time</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -349,12 +354,12 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     }
 
-                                                    echo round(($w_usdt / $cny_data[$i]["conversion_rate"]),4);
+                                                    echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
                                                     ?>
 
                                                 </td>
                                                 <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["staking_days"]-$days; ?></td>
+                                                <td><?php echo $cny_data[$i]["staking_days"] - $days; ?></td>
                                                 <td>
                                                     <?php
                                                     if ($cny_data[$i]["status"] == 'Pending') {
@@ -386,7 +391,37 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     ?>
                                                 </td>
                                                 <td>
+                                                    <?php
+                                                    $insert_time = new DateTime($cny_data[$i]["inserted_at"]);
+
+                                                    $new = $insert_time->format('d/m/Y h:i:s a');
+
+                                                    echo $new;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+
+                                                    $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["updated_at"] . ' + 8 hours'));
+
+                                                    $update_time = new DateTime($newDate);
+
+                                                    $update = $update_time->format('d/m/Y h:i:s a');
+
+                                                    if ($new != $update) {
+                                                        echo $update;
+                                                    }
+
+                                                    ?>
+                                                </td>
+                                                <td>
                                                     <div class="d-flex">
+                                                        <?php
+                                                        if ($cny_data[$i]["status"] == 'Approve') {
+                                                            ?>
+                                                            <a href="Update?undodepositId=<?php echo $cny_data[$i]["id"]; ?>"
+                                                               class="btn btn-success shadow btn-xs sharp me-1"><i class="fa fa-undo"></i></i></a>
+                                                        <?php } ?>
                                                         <a href="Staking-USDT?depositId=<?php echo $cny_data[$i]["id"]; ?>"
                                                            class="btn btn-primary shadow btn-xs sharp me-1"><i
                                                                     class="fa fa-pencil"></i></a>

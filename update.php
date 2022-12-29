@@ -73,8 +73,10 @@ if (isset($_GET['withdrawId'])) {
 
         $amount += $w_usdt;
 
+        $today = date("Y-m-d");
+
         if ($amount <= 2000000) {
-            $update = $db_handle->insertQuery("update withdraw_usdt set amount= amount+'$amount' where date='$today'");
+            $update = $db_handle->insertQuery("update withdraw_usdt set amount= '$amount' where date='$today'");
 
             $update_deposit = $db_handle->insertQuery("update deposit_cny set status= 'Approve', w_amount='$w_usdt' where id='{$id}'");
 
@@ -123,6 +125,33 @@ if (isset($_GET['withdrawId'])) {
                 </script>";
         }
     }
+}
+
+if (isset($_GET['undodepositId'])) {
+    $id = $db_handle->checkValue($_GET['undodepositId']);
+
+    $deposit_data = $db_handle->runQuery("SELECT * FROM deposit_cny where id='{$id}'");
+
+    $d_usdt = $deposit_data[0]['amount'];
+    $w_usdt = $deposit_data[0]['w_amount'];
+
+    $today = date('Y-m-d', strtotime($deposit_data[0]["updated_at"] . ' + 8 hours'));
+
+    $usdt_data = $db_handle->runQuery("SELECT sum(amount) as withdraw_amount FROM withdraw_usdt where date='$today'");
+    $amount = $usdt_data[0]['withdraw_amount'];
+
+    $amount = $w_usdt;
+
+    $update = $db_handle->insertQuery("update withdraw_usdt set amount= amount-'$amount' where date='$today'");
+
+    $update_deposit = $db_handle->insertQuery("update deposit_cny set status= 'Pending', w_amount='$d_usdt' where id='{$id}'");
+
+    echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Staking-USDT';
+                </script>";
+
+
 }
 
 if (isset($_POST['updateBuySell'])) {
