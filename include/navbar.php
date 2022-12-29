@@ -47,6 +47,12 @@
                     <span class="nav-text">CNY</span>
                 </a>
             </li>
+            <li>
+                <a class="ai-icon" href="Client" aria-expanded="false">
+                    <i class="flaticon-045-heart"></i>
+                    <span class="nav-text">Client</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

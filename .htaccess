@@ -4,6 +4,10 @@ RewriteRule ^Dashboard dashboard.php [L]
 
 RewriteRule ^Staking-USDT staking-usdt.php [L]
 
+RewriteRule ^Client client.php [L]
+
+RewriteRule ^View-Record view_record.php [L]
+
 RewriteRule ^Insert insert.php [L]
 
 RewriteRule ^Update update.php [L]
