@@ -4,6 +4,8 @@ RewriteRule ^Dashboard dashboard.php [L]
 
 RewriteRule ^Staking-USDT staking-usdt.php [L]
 
+RewriteRule ^Stake-CNY stake-cny.php [L]
+
 RewriteRule ^Client client.php [L]
 
 RewriteRule ^View-Record view_record.php [L]

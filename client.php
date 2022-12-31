@@ -229,22 +229,104 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Transferee 1 (Optional)</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
+                                                <input type="text" class="form-control" name="transferee_1"
                                                        placeholder="Transferee">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Transferee 2 (Optional)</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
+                                                <input type="text" class="form-control" name="transferee_2"
                                                        placeholder="Transferee">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Transferee 3 (Optional)</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
+                                                <input type="text" class="form-control" name="transferee_3"
                                                        placeholder="Transferee">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6 mx-auto">
+                                                <button type="submit" class="btn btn-primary w-25" name="addClient">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Deposit CNY</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="Insert" method="post">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Client Name <span class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <select class="default-select form-control wide mb-3"
+                                                        style="display: none;" required name="client_ID">
+                                                    <option>Choose..</option>
+                                                    <?php
+                                                    $client = $db_handle->runQuery("SELECT * FROM client order by id desc");
+                                                    $row_count = $db_handle->numRows("SELECT * FROM client order by id desc");
+
+                                                    for ($i = 0; $i < $row_count; $i++) {
+                                                        ?>
+                                                        <option value="<?php echo $client[$i]["id"]; ?>"><?php echo $client[$i]["client_name"]; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="conversion_rate"
+                                                       placeholder="CNY/HKD Rate"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Input Method</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="input_method"
+                                                       placeholder="Input Method">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Account Number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="account_number"
+                                                       placeholder="Account Number">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_name"
+                                                       placeholder="Bank Name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="bank_holder"
+                                                       placeholder="Bank Holder">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="amount"
+                                                       placeholder="Amount">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

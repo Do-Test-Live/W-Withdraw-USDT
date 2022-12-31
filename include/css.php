@@ -15,6 +15,7 @@ if(!isset($_SESSION["userid"])){
 <link href="public/css/style.css" rel="stylesheet">
 <!-- Custom Stylesheet -->
 <link href="public/vendor/toastr/css/toastr.min.css" rel="stylesheet" type="text/css"/>
+
 <style>
     .toast-success {
         background-color: #5fb46e;

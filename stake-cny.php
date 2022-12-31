@@ -21,7 +21,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>CNY | CNY/HKD</title>
+    <title>Stake CNY | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -71,7 +71,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            CNY
+                            Stake CNY
                         </div>
                     </div>
                 </div>
@@ -97,102 +97,52 @@ date_default_timezone_set("Asia/Hong_Kong");
         <!-- row -->
         <div class="container-fluid">
             <div class="row invoice-card-row">
-                <?php if (isset($_GET['depositId'])) { ?>
+                <?php if (isset($_GET['withdrawId'])) { ?>
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Update Staking CNY</h4>
+                                <h4 class="card-title">Withdraw CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
                                     <form method="post" action="Update">
 
-                                        <?php $data = $db_handle->runQuery("SELECT * FROM deposit_cny where id={$_GET['depositId']}"); ?>
+                                        <?php $data = $db_handle->runQuery("SELECT * FROM stake where id={$_GET['withdrawId']}"); ?>
 
                                         <input type="hidden" value="<?php echo $data[0]["id"]; ?>" name="id" required>
-
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name</label>
+                                            <label class="col-sm-3 col-form-label">Available Withdraw Amount</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="client_name"
-                                                       placeholder="Client Name"
-                                                       value="<?php echo $data[0]["client_name"]; ?>" required>
+                                                <input type="text" class="form-control" value="" readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       value="<?php echo $data[0]["transferee"]; ?>"
-                                                       placeholder="Transferee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="conversion_rate"
-                                                       placeholder="CNY/HKD Rate"
-                                                       value="<?php echo $data[0]["conversion_rate"]; ?>" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Input Method</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="input_method"
-                                                       value="<?php echo $data[0]["input_method"]; ?>"
-                                                       placeholder="Input Method">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Account Number</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="account_number"
-                                                       value="<?php echo $data[0]["account_number"]; ?>"
-                                                       placeholder="Account Number">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_name"
-                                                       value="<?php echo $data[0]["bank_name"]; ?>"
-                                                       placeholder="Bank Name">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_holder"
-                                                       value="<?php echo $data[0]["bank_holder"]; ?>"
-                                                       placeholder="Bank Holder">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <label class="col-sm-3 col-form-label">Withdraw Amount</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="amount"
-                                                       value="<?php echo $data[0]["amount"]; ?>"
-                                                       placeholder="Amount">
+                                                       placeholder="Withdraw Amount"
+                                                       value="" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Status</label>
+                                            <label class="col-sm-3 col-form-label">Remaining Withdraw Amount</label>
                                             <div class="col-sm-9">
-                                                <select class="default-select  form-control wide" name="status"
-                                                        required>
-                                                    <option value="Pending" <?php echo ($data[0]["status"] == 'Pending') ? "selected" : ""; ?>>
-                                                        Pending
-                                                    </option>
-                                                    <option value="Withdraw" <?php echo ($data[0]["status"] == 'Approve') ? "selected" : ""; ?>>
-                                                        Approve
-                                                    </option>
-                                                </select>
+                                                <input type="text" class="form-control"
+                                                       value="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Proof Image</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input form-control" name="proof_image">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
                                                 <button type="submit" class="btn btn-primary w-25"
-                                                        name="updateCNY">Submit
+                                                        name="withdrawCNY">Submit
                                                 </button>
                                             </div>
                                         </div>
@@ -213,52 +163,19 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="client_name"
-                                                       placeholder="Client Name"
-                                                       required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       placeholder="Transferee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="conversion_rate"
-                                                       placeholder="CNY/HKD Rate"
-                                                       required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Input Method</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="input_method"
-                                                       placeholder="Input Method">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Account Number</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="account_number"
-                                                       placeholder="Account Number">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_name"
-                                                       placeholder="Bank Name">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_holder"
-                                                       placeholder="Bank Holder">
+                                                <select class="default-select form-control wide mb-3" style="display: none;" name="clientID">
+                                                    <option>Choose..</option>
+                                                    <?php
+                                                    $client = $db_handle->runQuery("SELECT * FROM client order by id desc");
+                                                    $row_count = $db_handle->numRows("SELECT * FROM client order by id desc");
+
+                                                    for ($i = 0; $i < $row_count; $i++) {
+                                                        ?>
+                                                        <option value="<?php echo $client[$i]["id"]; ?>"><?php echo $client[$i]["client_name"]; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -277,8 +194,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Stake Start Time </label>
+                                            <div class="col-sm-9">
+                                                <input type="datetime-local" class="form-control" name="start_time">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
-                                                <button type="submit" class="btn btn-primary w-25" name="depositCNY">
+                                                <button type="submit" class="btn btn-primary w-25" name="stakeCNY">
                                                     Submit
                                                 </button>
                                             </div>
@@ -303,10 +226,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Client Name</th>
                                             <th>Transferee</th>
                                             <th>HKD/CNY</th>
-                                            <th>Input Method</th>
-                                            <th>Account Number</th>
-                                            <th>Bank Name</th>
-                                            <th>Bank Holder</th>
                                             <th>Deposit CNY</th>
                                             <th>Payout HKD</th>
                                             <th>Stake Plan</th>
@@ -320,24 +239,20 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $cny_data = $db_handle->runQuery("SELECT * FROM deposit_cny order by id desc");
-                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
+                                        $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id order by s.id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM stake as s, client as c where s.client_id=c.id order by s.id desc");
 
                                         for ($i = 0; $i < $row_count; $i++) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
                                                 <td><?php echo $cny_data[$i]["client_name"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["transferee"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["trasferee"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["input_method"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["account_number"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["bank_name"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["bank_holder"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["amount"]; ?></td>
                                                 <td><?php
                                                     $d_usdt = $cny_data[$i]["amount"];
-                                                    $w_usdt = $cny_data[$i]["w_amount"];
+                                                    $w_usdt = $cny_data[$i]["amount"];
 
                                                     if ($cny_data[$i]["status"] == 'Pending') {
 
@@ -377,7 +292,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <?php
                                                     if ($cny_data[$i]["status"] == 'Pending') {
                                                         ?>
-                                                        <a href="Update?withdrawId=<?php echo $cny_data[$i]["id"]; ?>"
+                                                        <a href="Stake-CNY?withdrawId=<?php echo $cny_data[$i]["id"]; ?>"
                                                            class="btn btn-primary">Withdraw Available
                                                         </a>
                                                         <?php
@@ -420,14 +335,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         if ($cny_data[$i]["status"] == 'Approve') {
                                                             ?>
                                                             <a href="Update?undodepositId=<?php echo $cny_data[$i]["id"]; ?>"
-                                                               class="btn btn-success shadow btn-xs sharp me-1"><i class="fa fa-undo"></i></i></a>
+                                                               class="btn btn-success shadow btn-xs sharp me-1"><i
+                                                                        class="fa fa-undo"></i></i></a>
                                                         <?php } ?>
-                                                        <a href="Staking-USDT?depositId=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                                    class="fa fa-pencil"></i></a>
-                                                        <a onclick="usdtDelete(<?php echo $cny_data[$i]["id"]; ?>);"
-                                                           class="btn btn-danger shadow btn-xs sharp"><i
-                                                                    class="fa fa-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -466,6 +376,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 <!--**********************************
     Scripts
 ***********************************-->
+
 <?php require_once('include/js.php'); ?>
 
 <script>
