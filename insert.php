@@ -161,7 +161,7 @@ if (isset($_POST["withdrawCNY"])) {
 
 
     if($amount<=$available_amount){
-        $insert = $db_handle->insertQuery("INSERT INTO `withdraw`(`client_id`, `proof`, `amount`, `inserted_at`) VALUES ('$client_id','$proof_image','$amount','$inserted_at')");
+        $insert = $db_handle->insertQuery("INSERT INTO `withdraw`(`client_id`, `proof`,`conversion_rate`, `amount`, `inserted_at`) VALUES ('$client_id','$proof_image','$conversion_rate','$amount','$inserted_at')");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
 

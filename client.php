@@ -381,6 +381,131 @@ date_default_timezone_set("Asia/Hong_Kong");
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Client Deposit Record</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example4" class="display" style="min-width: 845px">
+                                        <thead>
+                                        <tr>
+                                            <th>SL</th>
+                                            <th>Client Name</th>
+                                            <th>Transferee</th>
+                                            <th>HKD/CNY</th>
+                                            <th>Input Method</th>
+                                            <th>Account Number</th>
+                                            <th>Bank Name</th>
+                                            <th>Bank Holder</th>
+                                            <th>Deposit CNY</th>
+                                            <th>Payout HKD</th>
+                                            <th>Inserted Time</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $client = $db_handle->runQuery("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id order by d.id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM withdraw as d, client as c where d.client_id=c.id order by d.id desc");
+
+                                        for ($i = 0; $i < $row_count; $i++) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $i + 1; ?></td>
+                                                <td><?php echo $client[$i]["client_name"]; ?></td>
+                                                <td><?php echo $client[$i]["trasferee"]; ?></td>
+                                                <td><?php echo $client[$i]["conversion_rate"]; ?></td>
+                                                <td><?php echo $client[$i]["input_method"]; ?></td>
+                                                <td><?php echo $client[$i]["account_number"]; ?></td>
+                                                <td><?php echo $client[$i]["bank_name"]; ?></td>
+                                                <td><?php echo $client[$i]["bank_holder"]; ?></td>
+                                                <td><?php echo $client[$i]["amount"]; ?></td>
+                                                <td>
+                                                    <?php
+                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4);
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $insert_time = new DateTime($client[$i]["inserted_at"]);
+
+                                                    $new = $insert_time->format('d/m/Y h:i:s a');
+
+                                                    echo $new;
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Client Withdraw Record</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example4" class="display" style="min-width: 845px">
+                                        <thead>
+                                        <tr>
+                                            <th>SL</th>
+                                            <th>Client Name</th>
+                                            <th>Transferee</th>
+                                            <th>HKD/CNY</th>
+                                            <th>Withdraw CNY</th>
+                                            <th>Payout HKD</th>
+                                            <th>Proof</th>
+                                            <th>Inserted Time</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $client = $db_handle->runQuery("SELECT * FROM withdraw as d, client as c where d.client_id=c.id order by d.id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM withdraw as d, client as c where d.client_id=c.id order by d.id desc");
+
+                                        for ($i = 0; $i < $row_count; $i++) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $i + 1; ?></td>
+                                                <td><?php echo $client[$i]["client_name"]; ?></td>
+                                                <td><?php echo $client[$i]["trasferee"]; ?></td>
+                                                <td><?php echo $client[$i]["conversion_rate"]; ?></td>
+                                                <td><?php echo $client[$i]["amount"]; ?></td>
+                                                <td>
+                                                    <?php
+                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4);
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <a href="<?php echo $client[$i]["proof"]; ?>"
+                                                       target="_blank">Proof</a>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $insert_time = new DateTime($client[$i]["inserted_at"]);
+
+                                                    $new = $insert_time->format('d/m/Y h:i:s a');
+
+                                                    echo $new;
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php } ?>
             </div>
         </div>
