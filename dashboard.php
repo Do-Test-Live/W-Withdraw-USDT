@@ -133,7 +133,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-12">
+                <!--<div class="col-lg-6 col-sm-12">
                     <div class="card bg-secondary invoice-card">
                         <div class="card-body d-flex">
                             <div class="icon me-3">
@@ -145,7 +145,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Approve';");
+/*                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Approve';");
 
                                     $row_count = $db_handle->numRows("SELECT * FROM deposit_cny where status='Approve' order by id desc;");
 
@@ -159,7 +159,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         echo round($total, 4);
                                     else
                                         echo '0.00';
-                                    ?>
+                                    */?>
                                     HKD
                                 </h2>
                                 <span class="text-white fs-18">Total Output Amount Approve</span>
@@ -179,7 +179,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
+/*                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
 
                                     $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
 
@@ -213,14 +213,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         echo round($total, 4);
                                     else
                                         echo '0.00';
-                                    ?>
+                                    */?>
                                     HKD
                                 </h2>
                                 <span class="text-white fs-18">Total amount need to be withdraw today</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

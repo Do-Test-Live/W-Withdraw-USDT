@@ -82,7 +82,7 @@ if (isset($_POST["stakeCNY"])) {
 
     $available_amount=(double) $cny_data[0]["user_balance"];
 
-    $conversion_rate = $db_handle->checkValue($_POST['conversion_rate']);
+    $conversion_rate = $db_handle->checkValue($cny_data[0]['conversion_rate']);
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Withdraw'");
 
@@ -114,7 +114,66 @@ if (isset($_POST["stakeCNY"])) {
                 window.location.href='Stake-CNY';
                 </script>";
     }
+}
+
+if (isset($_POST["withdrawCNY"])) {
+    $client_id = $db_handle->checkValue($_POST['client_id']);
+    $amount = (double) $db_handle->checkValue($_POST['amount']);
+
+    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Deposit'");
+    $conversion_rate = $cny_data[0]['conversion_rate'];
+
+    $available_amount=(double) $cny_data[0]["user_balance"];
+
+    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Withdraw'");
+
+    $available_amount-=(double) $cny_data[0]["user_balance"];
+
+    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Stake'");
+
+    $available_amount-=(double) $cny_data[0]["user_balance"];
 
 
+    $inserted_at = date("Y-m-d H:i:s");
+
+    $proof_image = '';
+    if (!empty($_FILES['proof_image']['name'])) {
+        $RandomAccountNumber = mt_rand(1, 99999);
+
+        $file_name = $RandomAccountNumber . "_" . $_FILES['proof_image']['name'];
+        $file_size = $_FILES['proof_image']['size'];
+        $file_tmp = $_FILES['proof_image']['tmp_name'];
+
+        $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        if (
+            $file_type != "jpg" && $file_type != "png" && $file_type != "jpeg"
+            && $file_type != "gif"
+        ) {
+            $proof_image= '';
+        } else {
+            move_uploaded_file($file_tmp, "assets/images/proof/" . $file_name);
+            $proof_image = "assets/images/proof/" . $file_name;
+        }
+
+    } else {
+        $proof_image = '';
+    }
+
+
+    if($amount<=$available_amount){
+        $insert = $db_handle->insertQuery("INSERT INTO `withdraw`(`client_id`, `proof`, `amount`, `inserted_at`) VALUES ('$client_id','$proof_image','$amount','$inserted_at')");
+
+        $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
+
+        echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Client';
+                </script>";
+    }else{
+        echo "<script>
+                alert('Withdraw amount not more than available amount');
+
+                </script>";
+    }
 }
 

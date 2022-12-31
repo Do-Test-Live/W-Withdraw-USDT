@@ -84,7 +84,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($total_withdraw,4);
+                            echo round($remain_balance,4);
                             ?>
                         </strong>
                     </td>

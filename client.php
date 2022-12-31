@@ -97,102 +97,62 @@ date_default_timezone_set("Asia/Hong_Kong");
         <!-- row -->
         <div class="container-fluid">
             <div class="row invoice-card-row">
-                <?php if (isset($_GET['depositId'])) { ?>
+                <?php if (isset($_GET['withdrawId'])) { ?>
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Update Staking CNY</h4>
+                                <h4 class="card-title">Withdraw CNY</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form method="post" action="Update">
+                                    <form method="post" action="Insert" enctype="multipart/form-data">
 
-                                        <?php $data = $db_handle->runQuery("SELECT * FROM deposit_cny where id={$_GET['depositId']}"); ?>
-
-                                        <input type="hidden" value="<?php echo $data[0]["id"]; ?>" name="id" required>
-
+                                        <input type="hidden" value="<?php echo $_GET['withdrawId']; ?>" name="client_id"
+                                               required>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Available Withdraw Amount</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control"
+                                                       value="<?php echo $_GET['total']; ?>" id="total_amount" readonly>
+                                            </div>
+                                        </div>
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="client_name"
+                                                <input type="text" class="form-control"
                                                        placeholder="Client Name"
-                                                       value="<?php echo $data[0]["client_name"]; ?>" required>
+                                                       value="<?php echo $_GET['name']; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee"
-                                                       value="<?php echo $data[0]["transferee"]; ?>"
-                                                       placeholder="Transferee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="conversion_rate"
-                                                       placeholder="CNY/HKD Rate"
-                                                       value="<?php echo $data[0]["conversion_rate"]; ?>" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Input Method</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="input_method"
-                                                       value="<?php echo $data[0]["input_method"]; ?>"
-                                                       placeholder="Input Method">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Account Number</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="account_number"
-                                                       value="<?php echo $data[0]["account_number"]; ?>"
-                                                       placeholder="Account Number">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_name"
-                                                       value="<?php echo $data[0]["bank_name"]; ?>"
-                                                       placeholder="Bank Name">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank Holder</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="bank_holder"
-                                                       value="<?php echo $data[0]["bank_holder"]; ?>"
-                                                       placeholder="Bank Holder">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <label class="col-sm-3 col-form-label">Withdraw Amount <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="amount"
-                                                       value="<?php echo $data[0]["amount"]; ?>"
-                                                       placeholder="Amount">
+                                                       placeholder="Withdraw Amount"
+                                                       onkeyup="calculateBalance(this.value)"
+                                                       onkeydown="calculateBalance(this.value)" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Status</label>
+                                            <label class="col-sm-3 col-form-label">Remaining Withdraw Amount</label>
                                             <div class="col-sm-9">
-                                                <select class="default-select  form-control wide" name="status"
-                                                        required>
-                                                    <option value="Pending" <?php echo ($data[0]["status"] == 'Pending') ? "selected" : ""; ?>>
-                                                        Pending
-                                                    </option>
-                                                    <option value="Withdraw" <?php echo ($data[0]["status"] == 'Approve') ? "selected" : ""; ?>>
-                                                        Approve
-                                                    </option>
-                                                </select>
+                                                <input type="text" class="form-control"
+                                                       value="0" id="remain_withdraw" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Proof Image (Optional)</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input" name="proof_image">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
                                                 <button type="submit" class="btn btn-primary w-25"
-                                                        name="updateCNY">Submit
+                                                        name="withdrawCNY">Submit
                                                 </button>
                                             </div>
                                         </div>
@@ -211,7 +171,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                 <div class="basic-form">
                                     <form action="Insert" method="post">
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Client Name <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="client_name"
                                                        placeholder="Client Name"
@@ -219,7 +180,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Phone <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Phone <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="phone"
                                                        placeholder="Phone"
@@ -268,7 +230,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                 <div class="basic-form">
                                     <form action="Insert" method="post">
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Client Name <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <select class="default-select form-control wide mb-3"
                                                         style="display: none;" required name="client_ID">
@@ -356,6 +319,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Transferee</th>
                                             <th>Total Balance</th>
                                             <th>View Records</th>
+                                            <th>Withdraw</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -372,15 +336,15 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td>
                                                     <?php
 
-                                                    $balance= $db_handle->runQuery("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
+                                                    $balance = $db_handle->runQuery("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
                                                     $row = $db_handle->numRows("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
-                                                    $total=0;
-                                                    for($j=0;$j<$row;$j++){
+                                                    $total = 0;
+                                                    for ($j = 0; $j < $row; $j++) {
 
-                                                        if($balance[$j]["balance_type"]=='Deposit'){
-                                                            $total+=$balance[$j]["balance"]/$balance[$j]["conversion_rate"];
-                                                        }else{
-                                                            $total-=$balance[$j]["balance"]/$balance[$j]["conversion_rate"];
+                                                        if ($balance[$j]["balance_type"] == 'Deposit') {
+                                                            $total += $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
+                                                        } else {
+                                                            $total -= $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
                                                         }
 
                                                     }
@@ -389,8 +353,23 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg"><i
-                                                                class="fa fa-eye" onclick="showRecord(<?php echo $client[$i]["id"]; ?>,'<?php echo $client[$i]["client_name"]; ?>');"></i></button>
+                                                    <button type="button" class="btn btn-primary mb-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target=".bd-example-modal-lg"><i
+                                                                class="fa fa-eye"
+                                                                onclick="showRecord(<?php echo $client[$i]["id"]; ?>,'<?php echo $client[$i]["client_name"]; ?>');"></i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($total > 0) {
+                                                        ?>
+                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo round($total, 4); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
+                                                           class="btn btn-primary">Withdraw
+                                                        </a>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </td>
                                             </tr>
                                             <?php
@@ -452,6 +431,11 @@ date_default_timezone_set("Asia/Hong_Kong");
 <?php require_once('include/js.php'); ?>
 
 <script>
+    function calculateBalance(balance) {
+        let total_amount = parseFloat(document.getElementById('total_amount').value);
+        document.getElementById('remain_withdraw').value = parseFloat(total_amount - balance).toFixed(4);
+    }
+
     function usdtDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -502,16 +486,16 @@ date_default_timezone_set("Asia/Hong_Kong");
     }
 </script>
 <script>
-    async function showRecord(id,name) {
+    async function showRecord(id, name) {
         $.ajax({
             type: "POST",
             url: "View-Record",
             data: {id: id},
-            success:async function(msg){
+            success: async function (msg) {
                 $("#viewRecord").html(msg)
                 $("#client_name").html(name)
             },
-            error: function(){
+            error: function () {
                 alert("failure");
             }
         });
