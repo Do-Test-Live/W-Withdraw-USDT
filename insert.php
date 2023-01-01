@@ -27,7 +27,30 @@ if (isset($_POST["depositCNY"])) {
 
     $inserted_at = date("Y-m-d H:i:s");
 
-    $insert = $db_handle->insertQuery("INSERT INTO `deposit_cny`(`client_id`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`,  `inserted_at`) VALUES ('$client_id','$conversion_rate','$input_method','$account_number','$bank_name','$bank_holder','$amount','$inserted_at')");
+    $proof_image = '';
+    if (!empty($_FILES['proof_image']['name'])) {
+        $RandomAccountNumber = mt_rand(1, 99999);
+
+        $file_name = $RandomAccountNumber . "_" . $_FILES['proof_image']['name'];
+        $file_size = $_FILES['proof_image']['size'];
+        $file_tmp = $_FILES['proof_image']['tmp_name'];
+
+        $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        if (
+            $file_type != "jpg" && $file_type != "png" && $file_type != "jpeg"
+            && $file_type != "gif"
+        ) {
+            $proof_image= '';
+        } else {
+            move_uploaded_file($file_tmp, "assets/images/proof/" . $file_name);
+            $proof_image = "assets/images/proof/" . $file_name;
+        }
+
+    } else {
+        $proof_image = '';
+    }
+
+    $insert = $db_handle->insertQuery("INSERT INTO `deposit_cny`(`client_id`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`, `proof_image`,  `inserted_at`) VALUES ('$client_id','$conversion_rate','$input_method','$account_number','$bank_name','$bank_holder','$amount','$proof_image','$inserted_at')");
 
     $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Deposit','$inserted_at')");
 

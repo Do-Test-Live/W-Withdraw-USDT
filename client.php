@@ -162,6 +162,62 @@ date_default_timezone_set("Asia/Hong_Kong");
                         </div>
                     </div>
                 <?php } else { ?>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Deposit Record</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="Record" method="get">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Date<span
+                                                        class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="date" class="form-control" name="date"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6 mx-auto">
+                                                <button type="submit" class="btn btn-primary w-50" name="depositRecord">
+                                                    Show Record
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Withdraw Record</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form action="Record" method="get">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Date<span
+                                                        class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="date" class="form-control" name="date"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-6 mx-auto">
+                                                <button type="submit" class="btn btn-primary w-50" name="withdrawRecord">
+                                                    Show Record
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
@@ -250,7 +306,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate</label>
+                                            <label class="col-sm-3 col-form-label">CNY/HKD Rate <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="conversion_rate"
                                                        placeholder="CNY/HKD Rate"
@@ -286,10 +343,19 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <label class="col-sm-3 col-form-label">Amount <span
+                                                        class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="amount"
-                                                       placeholder="Amount">
+                                                       placeholder="Amount" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Bank in Proof Image (Optional)</label>
+                                            <div class="col-sm-9">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input" name="proof_image">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -401,6 +467,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Bank Holder</th>
                                             <th>Deposit CNY</th>
                                             <th>Payout HKD</th>
+                                            <th>Bank in Proof</th>
                                             <th>Inserted Time</th>
                                         </tr>
                                         </thead>
@@ -425,6 +492,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <?php
                                                     echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4);
                                                     ?>
+                                                </td>
+                                                <td>
+                                                    <a href="<?php echo $client[$i]["proof"]; ?>"
+                                                       target="_blank">Bank in Proof</a>
                                                 </td>
                                                 <td>
                                                     <?php
