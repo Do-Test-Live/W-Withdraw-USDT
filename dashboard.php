@@ -109,15 +109,15 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
+                                    $data = $db_handle->runQuery("SELECT * FROM balance where balance_type='Deposit';");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
+                                    $row_count = $db_handle->numRows("SELECT * FROM balance where balance_type='Deposit'");
 
                                     $total = 0;
 
                                     for ($i = 0; $i < $row_count; $i++) {
 
-                                        $d_usdt = $data[$i]['amount'];
+                                        $d_usdt = $data[$i]['balance'];
 
                                         $total += $d_usdt / $data[$i]['conversion_rate'];
                                     }
@@ -128,12 +128,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     ?>
                                     HKD
                                 </h2>
-                                <span class="text-white fs-18">Total Input Amount</span>
+                                <span class="text-white fs-18">Total Deposit Amount</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-lg-6 col-sm-12">
+                <div class="col-lg-6 col-sm-12">
                     <div class="card bg-secondary invoice-card">
                         <div class="card-body d-flex">
                             <div class="icon me-3">
@@ -145,24 +145,24 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-/*                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny where status='Approve';");
+                                    $data = $db_handle->runQuery("SELECT * FROM balance where balance_type='Withdraw';");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny where status='Approve' order by id desc;");
+                                    $row_count = $db_handle->numRows("SELECT * FROM balance where balance_type='Withdraw'");
 
                                     $total = 0;
 
                                     for ($i = 0; $i < $row_count; $i++) {
-                                        $total += $data[$i]['w_amount'] / $data[$i]['conversion_rate'];
+                                        $total += $data[$i]['balance'] / $data[$i]['conversion_rate'];
                                     }
 
                                     if ($total != 0)
                                         echo round($total, 4);
                                     else
                                         echo '0.00';
-                                    */?>
+                                    ?>
                                     HKD
                                 </h2>
-                                <span class="text-white fs-18">Total Output Amount Approve</span>
+                                <span class="text-white fs-18">Total Withdraw Amount</span>
                             </div>
                         </div>
                     </div>
@@ -179,9 +179,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-/*                                    $data = $db_handle->runQuery("SELECT * FROM deposit_cny;");
+                                    $data = $db_handle->runQuery("SELECT * FROM stake;");
 
-                                    $row_count = $db_handle->numRows("SELECT * FROM deposit_cny order by id desc");
+                                    $row_count = $db_handle->numRows("SELECT * FROM stake order by id desc");
 
                                     $total = 0;
 
@@ -213,14 +213,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         echo round($total, 4);
                                     else
                                         echo '0.00';
-                                    */?>
+                                    ?>
                                     HKD
                                 </h2>
                                 <span class="text-white fs-18">Total amount need to be withdraw today</span>
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>
