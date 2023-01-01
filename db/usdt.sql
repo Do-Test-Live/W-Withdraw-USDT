@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2022 at 01:04 PM
+-- Generation Time: Jan 01, 2023 at 01:13 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -66,29 +66,12 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES
-(1, 1, 50000.0000, 0.8240, 'Deposit', '2022-12-29 12:36:20'),
-(2, 1, 50.0000, 0.8240, 'Withdraw', '2022-12-29 12:37:00'),
-(3, 1, 100.0000, 0.8240, 'Stake', '2022-12-29 12:37:31');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `buysell`
---
-
-CREATE TABLE `buysell` (
-  `id` int(11) NOT NULL,
-  `buy_price` double(10,2) NOT NULL,
-  `sell_price` double(10,2) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `buysell`
---
-
-INSERT INTO `buysell` (`id`, `buy_price`, `sell_price`, `updated_at`) VALUES
-(1, 0.00, 0.00, '2022-12-11 07:32:59');
+(1, 0, 2000.0000, 0.8000, 'Deposit', '2023-01-01 15:53:51'),
+(2, 1, 20000.0000, 0.8000, 'Deposit', '2023-01-01 15:56:28'),
+(3, 1, 5000.0000, 0.8000, 'Withdraw', '2023-01-01 15:58:51'),
+(4, 1, 5000.0000, 0.8000, 'Stake', '2023-01-01 15:59:21'),
+(5, 2, 100000.0000, 0.8800, 'Deposit', '2023-01-01 16:02:12'),
+(6, 2, 3000.0000, 0.8600, 'Deposit', '2023-01-01 17:46:15');
 
 -- --------------------------------------------------------
 
@@ -110,7 +93,8 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`id`, `client_name`, `phone`, `trasferee`, `inserted_at`, `updated_at`) VALUES
-(1, 'Monoget', '01799039179', 'Mugdha, Akash', '2022-12-29 12:35:30', '2022-12-29 11:36:08');
+(1, 'test client1', '12345678', 'test trans1, test trans2, ', '2023-01-01 15:52:33', '2023-01-01 07:52:33'),
+(2, 'test2', '98765432', '', '2023-01-01 16:01:54', '2023-01-01 08:01:54');
 
 -- --------------------------------------------------------
 
@@ -120,17 +104,14 @@ INSERT INTO `client` (`id`, `client_name`, `phone`, `trasferee`, `inserted_at`, 
 
 CREATE TABLE `deposit_cny` (
   `id` int(11) NOT NULL,
-  `client_name` varchar(250) NOT NULL,
+  `client_id` int(11) NOT NULL,
   `conversion_rate` double(10,4) NOT NULL,
   `input_method` varchar(100) NOT NULL,
   `account_number` varchar(50) NOT NULL,
   `bank_name` varchar(250) NOT NULL,
   `bank_holder` varchar(100) NOT NULL,
   `amount` double(15,4) NOT NULL,
-  `w_amount` double(15,4) NOT NULL,
-  `staking_days` int(11) NOT NULL,
-  `transferee` varchar(150) NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'Pending',
+  `proof_image` varchar(250) NOT NULL,
   `inserted_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -139,79 +120,57 @@ CREATE TABLE `deposit_cny` (
 -- Dumping data for table `deposit_cny`
 --
 
-INSERT INTO `deposit_cny` (`id`, `client_name`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`, `w_amount`, `staking_days`, `transferee`, `status`, `inserted_at`, `updated_at`) VALUES
-(1, 'Jason', 1.1100, 'bank transfer', '', 'hang seng', 'chan ta man', 10000.0000, 10000.0000, 3, '', 'Approve', '2022-12-13 01:30:32', '2022-12-15 04:20:55'),
-(2, 'Han', 1.2000, 'Bank', '123455', 'hang seng', 'Chan ', 10000.0000, 10000.0000, 3, '', 'Approve', '2022-12-13 14:06:42', '2022-12-15 04:20:58'),
-(3, '-', 1.0000, '', '622908 398060 544311', '興業銀行珠海分行', '卓少君', 0.0000, 0.0000, 0, '', 'Approve', '2022-12-14 14:47:23', '2022-12-15 07:02:53'),
-(4, 'WU YING ', 1.1500, 'Bank', '622908 398060 544311', '興業銀行珠海分行', '卓少君', 0.0000, 0.0000, 0, '', 'Approve', '2022-12-14 15:40:35', '2022-12-15 09:44:57'),
-(5, 'Shirley', 1.1200, 'Bank', '622908 398060 544311', '興業銀行珠海分行', '卓少君', 50000.0000, 50000.0000, 0, '', 'Pending', '2022-12-14 18:05:30', '2022-12-15 04:21:07'),
-(6, 'Shirley', 1.1200, 'Bank', '622908 398060 544311', '興業銀行珠海分行', '卓少君', 9252.0000, 9252.0000, 0, '', 'Approve', '2022-12-14 18:06:22', '2022-12-20 06:09:05'),
-(7, 'Shirley', 1.1200, 'Bank', '622908 398060 544311', '興業銀行珠海分行', '卓少君', 15559.0000, 15559.0000, 1, '', 'Pending', '2022-12-01 18:23:45', '2022-12-20 11:08:18'),
-(8, 'test', 0.8800, 'bank', '123', 'bank', '', 0.0000, 0.0000, 1, '', 'Pending', '2022-12-15 12:16:20', '2022-12-15 04:21:14'),
-(9, 'test2', 0.8800, 'bank', 'bank', '', '', 100.0000, 100.0000, 1, 'test22', 'Pending', '2022-12-15 12:37:18', '2022-12-15 04:37:18'),
-(10, 'HX', 0.8600, 'Bank', '', '農業銀行', '唐東紅', 198000.0000, 198000.0000, 7, '唐坤龍', 'Pending', '2022-12-15 17:47:42', '2022-12-15 09:47:42'),
-(11, 'HX', 0.8600, 'Bank', '', '農業銀行', '唐東紅', 47379.0000, 47379.0000, 7, '唐坤龍', 'Pending', '2022-12-15 17:48:14', '2022-12-15 09:48:14'),
-(12, 'HX', 0.8600, '', '', '', '陸海霞', 170900.0000, 170900.0000, 7, '唐坤龍', 'Pending', '2022-12-15 17:49:02', '2022-12-15 09:49:02'),
-(13, 'HX', 0.8600, '', '', '', '陸海霞', 121500.0000, 121500.0000, 7, '唐坤龍', 'Pending', '2022-12-15 17:49:48', '2022-12-15 09:49:48'),
-(14, 'MEI', 0.8800, '', '', '', '熊麗洋', 85000.0000, 85000.0000, 1, '趙明洋', 'Pending', '2022-12-15 17:51:18', '2022-12-15 09:51:18'),
-(15, 'MEI', 0.8800, '', '', '', '熊麗洋', 45000.0000, 45000.0000, 1, '闫媛媛', 'Pending', '2022-12-15 17:55:44', '2022-12-20 11:01:05'),
-(16, '未知', 0.8800, '', '', '', '郝正萍', 131820.0000, 131820.0000, 1, '郑甘露', 'Pending', '2022-12-16 10:48:11', '2022-12-20 10:59:28'),
-(17, 'test', 0.8900, 'Bank', 'Bank', 'B', 'B', 1.0000, 1.0000, 1, 'Test', 'Approve', '2022-12-16 17:42:12', '2022-12-20 04:36:52'),
-(18, 'test', 0.8900, '1', '1', '1', '1', 1.0000, 1.0000, 1, '1', 'Approve', '2022-12-16 18:46:33', '2022-12-20 04:36:45'),
-(19, '1', 0.8888, '1', '1', '1', '1', 1.0000, 1.0000, 1, '1', 'Approve', '2022-12-16 20:08:24', '2022-12-18 14:40:12'),
-(20, 'MEI', 0.8820, 'Bank', '', '', '蒲明义', 100000.0000, 100000.0000, 1, '熊丽洋', 'Pending', '2022-12-18 22:38:19', '2022-12-18 14:38:19'),
-(21, 'Winny', 0.8600, '', '', '', '', 300000.0000, 300000.0000, 6, '', 'Pending', '2022-12-18 22:41:40', '2022-12-18 14:41:40'),
-(22, '友邦入款70', 0.8600, '', '', '北京银行', '唐坤龙', 500000.0000, 500000.0000, 3, '张锰', 'Pending', '2022-12-18 22:42:49', '2022-12-19 07:16:17'),
-(23, '友邦入款70', 0.8600, '', '', '', '唐坤龙', 200000.0000, 200000.0000, 3, '张锰', 'Pending', '2022-12-18 22:43:13', '2022-12-19 07:16:42'),
-(24, 'MEI', 0.8835, '', '6226 0978 0609 5437', '招商銀行，深圳高新園支行', '郝正萍', 200000.0000, 200000.0000, 1, '田玉虎', 'Pending', '2022-12-19 15:19:05', '2022-12-19 07:19:05'),
-(25, 'MEI', 0.8844, '平安银行 6422', '6217……3387', '建设银行', '蒲明义', 60000.0000, 60000.0000, 1, '李桂兰', 'Pending', '2022-12-20 13:24:51', '2022-12-20 05:36:17'),
-(26, 'MEI', 0.8844, '招商银行 6214……9777', '6226……5437', '招商银行', '郝正萍', 250000.0000, 250000.0000, 1, '宫佳丽', 'Pending', '2022-12-20 13:25:56', '2022-12-20 05:35:36'),
-(27, 'MEI', 0.8844, '建设银行6214……2333', '6226……5437', '招商银行', '郝正萍', 250000.0000, 250000.0000, 1, '宫佳丽', 'Pending', '2022-12-20 13:27:41', '2022-12-20 05:35:18'),
-(28, 'MEI', 0.8844, '', '9542', '工商银行', '蒲明义', 50000.0000, 50000.0000, 1, '', 'Pending', '2022-12-20 13:29:16', '2022-12-20 05:34:52'),
-(29, 'MEI', 0.8844, '平安银行 8393', '6217……6086', '建设银行', '闫媛媛', 70000.0000, 70000.0000, 1, '陈小云', 'Pending', '2022-12-20 13:30:20', '2022-12-20 05:34:14'),
-(30, 'MEI', 0.8844, '平安银行 8393', '6216………4899', '中国银行', '闫媛媛', 23808.0000, 23808.0000, 1, '陈小云', 'Pending', '2022-12-20 13:31:07', '2022-12-20 05:33:11');
+INSERT INTO `deposit_cny` (`id`, `client_id`, `conversion_rate`, `input_method`, `account_number`, `bank_name`, `bank_holder`, `amount`, `proof_image`, `inserted_at`, `updated_at`) VALUES
+(1, 0, 0.8000, 'bank transfer', '123', 'hang seng', 'chan ta man', 2000.0000, '', '2023-01-01 15:53:51', '2023-01-01 07:53:51'),
+(2, 1, 0.8000, 'bank transfer', '', 'hang seng', 'chan ta man', 20000.0000, '', '2023-01-01 15:56:28', '2023-01-01 07:56:28'),
+(3, 2, 0.8800, 'bank transfer', '123', 'hang seng', 'chan ta man', 100000.0000, '', '2023-01-01 16:02:12', '2023-01-01 08:02:12'),
+(4, 2, 0.8600, 'bank transfer', '123', 'hang seng', '', 3000.0000, '', '2023-01-01 17:46:15', '2023-01-01 09:46:15');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `deposit_usdt`
+-- Table structure for table `stake`
 --
 
-CREATE TABLE `deposit_usdt` (
+CREATE TABLE `stake` (
   `id` int(11) NOT NULL,
-  `d_usdt` double(10,2) NOT NULL,
-  `w_usdt` double(10,2) NOT NULL,
-  `usdt_price` varchar(50) NOT NULL,
-  `days` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `conversion_rate` double(10,4) NOT NULL,
+  `amount` double(10,4) NOT NULL,
+  `staking_days` int(11) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'Pending',
   `inserted_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `stake`
+--
+
+INSERT INTO `stake` (`id`, `client_id`, `conversion_rate`, `amount`, `staking_days`, `status`, `inserted_at`, `updated_at`) VALUES
+(2, 1, 0.8000, 5000.0000, 3, 'Pending', '2023-01-01 15:59:00', '2023-01-01 07:59:21');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `withdraw_usdt`
+-- Table structure for table `withdraw`
 --
 
-CREATE TABLE `withdraw_usdt` (
+CREATE TABLE `withdraw` (
   `id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `proof` varchar(250) NOT NULL,
   `amount` double(10,4) NOT NULL,
-  `inserted_at` datetime NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `conversion_rate` double(10,4) NOT NULL,
+  `inserted_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `withdraw_usdt`
+-- Dumping data for table `withdraw`
 --
 
-INSERT INTO `withdraw_usdt` (`id`, `date`, `amount`, `inserted_at`, `updated_at`) VALUES
-(1, '2022-12-13', 10000.0000, '2022-12-13 01:30:37', '2022-12-12 17:30:37'),
-(2, '2022-12-14', 10000.0000, '2022-12-14 18:54:36', '2022-12-14 10:54:36'),
-(3, '2022-12-15', 38281.0000, '2022-12-15 15:02:04', '2022-12-15 07:02:04'),
-(4, '2022-12-18', 1.0000, '2022-12-18 22:40:12', '2022-12-18 14:40:12'),
-(5, '2022-12-20', -176819.0000, '2022-12-20 12:36:45', '2022-12-20 11:01:05');
+INSERT INTO `withdraw` (`id`, `client_id`, `proof`, `amount`, `conversion_rate`, `inserted_at`) VALUES
+(1, 1, 'assets/images/proof/99947_testing.jpg', 5000.0000, 0.8000, '2023-01-01 15:58:51');
 
 --
 -- Indexes for dumped tables
@@ -230,12 +189,6 @@ ALTER TABLE `balance`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `buysell`
---
-ALTER TABLE `buysell`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
@@ -248,15 +201,15 @@ ALTER TABLE `deposit_cny`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `deposit_usdt`
+-- Indexes for table `stake`
 --
-ALTER TABLE `deposit_usdt`
+ALTER TABLE `stake`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `withdraw_usdt`
+-- Indexes for table `withdraw`
 --
-ALTER TABLE `withdraw_usdt`
+ALTER TABLE `withdraw`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -273,37 +226,31 @@ ALTER TABLE `admin_login`
 -- AUTO_INCREMENT for table `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `buysell`
---
-ALTER TABLE `buysell`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `deposit_cny`
 --
 ALTER TABLE `deposit_cny`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `deposit_usdt`
+-- AUTO_INCREMENT for table `stake`
 --
-ALTER TABLE `deposit_usdt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `stake`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `withdraw_usdt`
+-- AUTO_INCREMENT for table `withdraw`
 --
-ALTER TABLE `withdraw_usdt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `withdraw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
