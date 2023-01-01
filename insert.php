@@ -40,7 +40,7 @@ if (isset($_POST["depositCNY"])) {
             $file_type != "jpg" && $file_type != "png" && $file_type != "jpeg"
             && $file_type != "gif"
         ) {
-            $proof_image= '';
+            $proof_image = '';
         } else {
             move_uploaded_file($file_tmp, "assets/images/proof/" . $file_name);
             $proof_image = "assets/images/proof/" . $file_name;
@@ -63,9 +63,9 @@ if (isset($_POST["depositCNY"])) {
 if (isset($_POST["addClient"])) {
     $client_name = $db_handle->checkValue($_POST['client_name']);
 
-    $phone= $db_handle->checkValue($_POST['phone']);
+    $phone = $db_handle->checkValue($_POST['phone']);
 
-    $transferee='';
+    $transferee = '';
 
     $transferee_1 = $db_handle->checkValue($_POST['transferee_1']);
 
@@ -73,16 +73,16 @@ if (isset($_POST["addClient"])) {
 
     $transferee_3 = $db_handle->checkValue($_POST['transferee_3']);
 
-    if($transferee_1!=''){
-        $transferee.=$transferee_1.', ';
+    if ($transferee_1 != '') {
+        $transferee .= $transferee_1 . ', ';
     }
 
-    if($transferee_2!=''){
-        $transferee.=$transferee_2.', ';
+    if ($transferee_2 != '') {
+        $transferee .= $transferee_2 . ', ';
     }
 
-    if($transferee_3!=''){
-        $transferee.=$transferee_3.', ';
+    if ($transferee_3 != '') {
+        $transferee .= $transferee_3 . ', ';
     }
 
     $inserted_at = date("Y-m-d H:i:s");
@@ -103,26 +103,26 @@ if (isset($_POST["stakeCNY"])) {
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Deposit'");
 
-    $available_amount=(double) $cny_data[0]["user_balance"];
+    $available_amount = (double)$cny_data[0]["user_balance"];
 
     $conversion_rate = $db_handle->checkValue($cny_data[0]['conversion_rate']);
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Withdraw'");
 
-    $available_amount-=(double) $cny_data[0]["user_balance"];
+    $available_amount -= (double)$cny_data[0]["user_balance"];
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Stake'");
 
-    $available_amount-=(double) $cny_data[0]["user_balance"];
+    $available_amount -= (double)$cny_data[0]["user_balance"];
 
 
-    $amount = (double) $db_handle->checkValue($_POST['amount']);
+    $amount = (double)$db_handle->checkValue($_POST['amount']);
 
     $start_time = $db_handle->checkValue($_POST['start_time']);
 
     $inserted_at = date("Y-m-d H:i:s");
 
-    if($amount<=$available_amount){
+    if ($amount <= $available_amount) {
         $insert = $db_handle->insertQuery("INSERT INTO `stake`( `client_id`, `conversion_rate`, `amount`, `staking_days`, `inserted_at`) VALUES ('$client_id','$conversion_rate','$amount','$staking_days','$start_time')");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Stake','$inserted_at')");
@@ -131,7 +131,7 @@ if (isset($_POST["stakeCNY"])) {
                 document.cookie = 'alert = 3;';
                 window.location.href='Stake-CNY';
                 </script>";
-    }else{
+    } else {
         echo "<script>
                 alert('Stake amount not more than available amount');
                 window.location.href='Stake-CNY';
@@ -141,20 +141,20 @@ if (isset($_POST["stakeCNY"])) {
 
 if (isset($_POST["withdrawCNY"])) {
     $client_id = $db_handle->checkValue($_POST['client_id']);
-    $amount = (double) $db_handle->checkValue($_POST['amount']);
+    $amount = (double)$db_handle->checkValue($_POST['amount']);
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Deposit'");
     $conversion_rate = $cny_data[0]['conversion_rate'];
 
-    $available_amount=(double) $cny_data[0]["user_balance"];
+    $available_amount = (double)$cny_data[0]["user_balance"];
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Withdraw'");
 
-    $available_amount-=(double) $cny_data[0]["user_balance"];
+    $available_amount -= (double)$cny_data[0]["user_balance"];
 
     $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Stake'");
 
-    $available_amount-=(double) $cny_data[0]["user_balance"];
+    $available_amount -= (double)$cny_data[0]["user_balance"];
 
 
     $inserted_at = date("Y-m-d H:i:s");
@@ -172,7 +172,7 @@ if (isset($_POST["withdrawCNY"])) {
             $file_type != "jpg" && $file_type != "png" && $file_type != "jpeg"
             && $file_type != "gif"
         ) {
-            $proof_image= '';
+            $proof_image = '';
         } else {
             move_uploaded_file($file_tmp, "assets/images/proof/" . $file_name);
             $proof_image = "assets/images/proof/" . $file_name;
@@ -183,7 +183,7 @@ if (isset($_POST["withdrawCNY"])) {
     }
 
 
-    if($amount<=$available_amount){
+    if ($amount <= $available_amount) {
         $insert = $db_handle->insertQuery("INSERT INTO `withdraw`(`client_id`, `proof`,`conversion_rate`, `amount`, `inserted_at`) VALUES ('$client_id','$proof_image','$conversion_rate','$amount','$inserted_at')");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
@@ -192,11 +192,99 @@ if (isset($_POST["withdrawCNY"])) {
                 document.cookie = 'alert = 3;';
                 window.location.href='Client';
                 </script>";
-    }else{
+    } else {
         echo "<script>
                 alert('Withdraw amount not more than available amount');
 
                 </script>";
     }
+}
+
+if (isset($_GET["withdrawStakeID"])) {
+    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.client_id={$_GET["withdrawStakeID"]}");
+
+
+    $d_usdt = $cny_data[0]["amount"];
+    $w_usdt = $cny_data[0]["amount"];
+    $days = 0;
+
+
+    $today = date("Y-m-d H:i:s");
+
+    $earlier = new DateTime($today);
+    $later = new DateTime($cny_data[0]["inserted_at"]);
+
+    $days = $later->diff($earlier)->format("%a"); //3
+
+    if ($days >= 7) {
+        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+    }
+
+
+    $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);
+    $conversion_rate = $cny_data[0]["conversion_rate"];
+    $client_id = $cny_data[0]["client_id"];
+    $inserted_at = date("Y-m-d H:i:s");
+    if ($cny_data[0]["staking_days"] - $days < 0) {
+        $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[0]["id"]}'");
+
+        $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
+
+        echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Stake-CNY';
+                </script>";
+    }else{
+        echo "<script>
+                document.cookie = 'alert = 7;';
+                window.location.href='Stake-CNY';
+                </script>";
+    }
+
+}
+
+if (isset($_GET["depositStakeID"])) {
+    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.client_id={$_GET["depositStakeID"]}");
+
+
+    $d_usdt = $cny_data[0]["amount"];
+    $w_usdt = $cny_data[0]["amount"];
+    $days = 0;
+
+
+    $today = date("Y-m-d H:i:s");
+
+    $earlier = new DateTime($today);
+    $later = new DateTime($cny_data[0]["inserted_at"]);
+
+    $days = $later->diff($earlier)->format("%a"); //3
+
+    if ($days >= 7) {
+        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+    }
+
+
+    $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);
+    $conversion_rate = $cny_data[0]["conversion_rate"];
+    $client_id = $cny_data[0]["client_id"];
+    $inserted_at = date("Y-m-d H:i:s");
+
+    if ($cny_data[0]["staking_days"] - $days < 0) {
+
+        $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[0]["id"]}'");
+
+        $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Deposit','$inserted_at')");
+
+        echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Stake-CNY';
+                </script>";
+    }else{
+        echo "<script>
+                document.cookie = 'alert = 7;';
+                window.location.href='Stake-CNY';
+                </script>";
+    }
+
 }
 

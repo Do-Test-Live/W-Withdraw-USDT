@@ -3,45 +3,6 @@ session_start();
 require_once("include/dbController.php");
 $db_handle = new DBController();
 date_default_timezone_set("Asia/Hong_Kong");
-
-$cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id order by s.id desc");
-$row_count = $db_handle->numRows("SELECT * FROM stake as s, client as c where s.client_id=c.id order by s.id desc");
-
-for ($i = 0; $i < $row_count; $i++) {
-
-    $d_usdt = $cny_data[$i]["amount"];
-    $w_usdt = $cny_data[$i]["amount"];
-    $days = 0;
-
-    if ($cny_data[$i]["status"] == 'Pending') {
-
-        $today = date("Y-m-d H:i:s");
-
-        $earlier = new DateTime($today);
-        $later = new DateTime($cny_data[$i]["inserted_at"]);
-
-        $days = $later->diff($earlier)->format("%a"); //3
-
-        if ($days >= 7) {
-            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
-        }
-
-    }
-
-    if ($cny_data[$i]["staking_days"] - $days < 0) {
-
-        $amount = round(($w_usdt * $cny_data[$i]["conversion_rate"]), 4);
-        $conversion_rate = $cny_data[$i]["conversion_rate"];
-        $client_id = $cny_data[$i]["client_id"];
-        $inserted_at = date("Y-m-d H:i:s");
-
-        $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[$i]["id"]}'");
-
-        $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Deposit','$inserted_at')");
-
-        header('location:Stake-CNY');
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -219,6 +180,8 @@ for ($i = 0; $i < $row_count; $i++) {
                                         <th>Status</th>
                                         <th>Inserted Time</th>
                                         <th>Updated Time</th>
+                                        <th>Withdraw</th>
+                                        <th>Deposit</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -256,19 +219,6 @@ for ($i = 0; $i < $row_count; $i++) {
 
                                                 echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
 
-
-                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
-
-                                                    $amount = round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
-                                                    $conversion_rate = $cny_data[$i]["conversion_rate"];
-                                                    $client_id = $cny_data[$i]["client_id"];
-                                                    $inserted_at = date("Y-m-d H:i:s");
-
-                                                    $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[$i]["id"]}'");
-
-                                                    $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Deposit','$inserted_at')");
-
-                                                }
                                                 ?>
 
                                             </td>
@@ -310,6 +260,24 @@ for ($i = 0; $i < $row_count; $i++) {
                                                 }
 
                                                 ?>
+                                            </td>
+                                            <td>
+                                                <?php
+/*                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
+                                                    */?>
+                                                    <a href="Insert?withdrawStakeID=<?php echo $cny_data[$i]["id"]; ?>" class="btn btn-primary">Withdraw</a>
+                                                <?php
+/*                                                }
+                                                */?>
+                                            </td>
+                                            <td>
+                                                <?php
+/*                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
+                                                    */?>
+                                                    <a href="Insert?depositStakeID=<?php echo $cny_data[$i]["id"]; ?>" class="btn btn-secondary">Deposit</a>
+                                                <?php
+/*                                                }
+                                                */?>
                                             </td>
                                         </tr>
                                         <?php
