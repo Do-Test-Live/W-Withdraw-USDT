@@ -98,7 +98,7 @@ date_default_timezone_set("Asia/Hong_Kong");
         <!-- row -->
         <div class="container-fluid">
             <div class="row invoice-card-row">
-                <?php if(isset($_GET['todayCheck'])) {
+                <?php if (isset($_GET['todayCheck'])) {
                     ?>
                     <div class="col-12">
                         <div class="card">
@@ -112,12 +112,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <tr>
                                             <th>SL</th>
                                             <th>Client Name</th>
-                                            <th>Transferee</th>
                                             <th>HKD/CNY</th>
-                                            <th>Deposit CNY</th>
-                                            <th>Payout HKD</th>
+                                            <th>Deposit HKD</th>
                                             <th>Stake Plan</th>
-                                            <th>Days Left</th>
+                                            <th>Stake End Date</th>
                                             <th>Status</th>
                                             <th>Inserted Time</th>
                                             <th>Updated Time</th>
@@ -146,37 +144,39 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $i + 1; ?></td>
-                                                    <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
-                                                    <td><?php echo $cny_data[$i]["trasferee"]; ?></td>
+                                                    <td><?php echo $cny_data[$i]["client_name"]; ?></td>
                                                     <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
                                                     <td><?php echo $cny_data[$i]["amount"]; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        $d_usdt = $cny_data[$i]["amount"];
-                                                        $w_usdt = $cny_data[$i]["amount"];
-                                                        $days = 0;
+                                                    <?php
+                                                    $d_usdt = $cny_data[$i]["amount"];
+                                                    $w_usdt = $cny_data[$i]["amount"];
+                                                    $days = 0;
 
-                                                        if ($cny_data[$i]["status"] == 'Pending') {
+                                                    if ($cny_data[$i]["status"] == 'Pending') {
 
-                                                            $today = date("Y-m-d H:i:s");
+                                                        $today = date("Y-m-d H:i:s");
 
-                                                            $earlier = new DateTime($today);
-                                                            $later = new DateTime($cny_data[$i]["inserted_at"]);
+                                                        $earlier = new DateTime($today);
+                                                        $later = new DateTime($cny_data[$i]["inserted_at"]);
 
-                                                            $days = $later->diff($earlier)->format("%a"); //3
+                                                        $days = $later->diff($earlier)->format("%a"); //3
 
-                                                            if ($days >= 7) {
-                                                                $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
-                                                            }
-
+                                                        if ($days >= 7) {
+                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
                                                         }
 
-                                                        echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
+                                                    }
 
+                                                    /*echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);*/
+
+                                                    ?>
+                                                    <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
+                                                        echo $newDate;
                                                         ?>
                                                     </td>
-                                                    <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
-                                                    <td><?php echo $cny_data[$i]["staking_days"] - $days; ?></td>
                                                     <td>
                                                         <?php
                                                         if ($cny_data[$i]["status"] == 'Pending') {
@@ -257,7 +257,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <div class="col-sm-9">
                                                 <select class="default-select form-control wide mb-3"
                                                         style="display: none;"
-                                                        name="clientID">
+                                                        name="clientID" onchange="availableBalance(this.value);"
+                                                        required>
                                                     <option>Choose..</option>
                                                     <?php
                                                     $client = $db_handle->runQuery("SELECT * FROM client order by id desc");
@@ -273,10 +274,18 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Available Balance</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="available_balance"
+                                                       name="available_balance"
+                                                       placeholder="Available Balance" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Stake HKD</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="amount"
-                                                       placeholder="Amount">
+                                                       placeholder="Stake HKD" required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -290,7 +299,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">Stake Start Time </label>
                                             <div class="col-sm-9">
-                                                <input type="datetime-local" class="form-control" name="start_time">
+                                                <input type="datetime-local" class="form-control" name="start_time"
+                                                       required>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -317,12 +327,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <tr>
                                             <th>SL</th>
                                             <th>Client Name</th>
-                                            <th>Transferee</th>
                                             <th>HKD/CNY</th>
-                                            <th>Deposit CNY</th>
-                                            <th>Payout HKD</th>
+                                            <th>Deposit HKD</th>
                                             <th>Stake Plan</th>
-                                            <th>Days Left</th>
+                                            <th>Stake End Date</th>
                                             <th>Status</th>
                                             <th>Inserted Time</th>
                                             <th>Updated Time</th>
@@ -339,37 +347,39 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
-                                                <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["trasferee"]; ?></td>
+                                                <td><?php echo $cny_data[$i]["client_name"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["conversion_rate"]; ?></td>
                                                 <td><?php echo $cny_data[$i]["amount"]; ?></td>
-                                                <td><?php
-                                                    $d_usdt = $cny_data[$i]["amount"];
-                                                    $w_usdt = $cny_data[$i]["amount"];
-                                                    $days = 0;
+                                                <?php
+                                                $d_usdt = $cny_data[$i]["amount"];
+                                                $w_usdt = $cny_data[$i]["amount"];
+                                                $days = 0;
 
-                                                    if ($cny_data[$i]["status"] == 'Pending') {
+                                                if ($cny_data[$i]["status"] == 'Pending') {
 
-                                                        $today = date("Y-m-d H:i:s");
+                                                    $today = date("Y-m-d H:i:s");
 
-                                                        $earlier = new DateTime($today);
-                                                        $later = new DateTime($cny_data[$i]["inserted_at"]);
+                                                    $earlier = new DateTime($today);
+                                                    $later = new DateTime($cny_data[$i]["inserted_at"]);
 
-                                                        $days = $later->diff($earlier)->format("%a"); //3
+                                                    $days = $later->diff($earlier)->format("%a"); //3
 
-                                                        if ($days >= 7) {
-                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
-                                                        }
-
+                                                    if ($days >= 7) {
+                                                        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
                                                     }
 
-                                                    echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);
+                                                }
 
-                                                    ?>
+                                                /*  echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);*/
 
-                                                </td>
+                                                ?>
                                                 <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
-                                                <td><?php echo $cny_data[$i]["staking_days"] - $days; ?></td>
+                                                <td>
+                                                    <?php
+                                                    $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
+                                                    echo $newDate;
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <?php
                                                     if ($cny_data[$i]["status"] == 'Pending') {
@@ -468,6 +478,21 @@ date_default_timezone_set("Asia/Hong_Kong");
 ***********************************-->
 
 <?php require_once('include/js.php'); ?>
+<script>
+    async function availableBalance(id) {
+        $.ajax({
+            type: "POST",
+            url: "balance.php",
+            data: {id: id},
+            success: async function (msg) {
+                $("#available_balance").val(msg);
+            },
+            error: function () {
+                alert("failure");
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
