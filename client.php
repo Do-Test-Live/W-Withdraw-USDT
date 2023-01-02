@@ -245,23 +245,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 1 (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Transferee (Optional)</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="transferee_1"
-                                                       placeholder="Transferee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 2 (Optional)</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee_2"
-                                                       placeholder="Transferee">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Transferee 3 (Optional)</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="transferee_3"
                                                        placeholder="Transferee">
                                             </div>
                                         </div>

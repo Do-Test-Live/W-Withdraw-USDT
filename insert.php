@@ -65,25 +65,9 @@ if (isset($_POST["addClient"])) {
 
     $phone = $db_handle->checkValue($_POST['phone']);
 
-    $transferee = '';
+    $transferee = $db_handle->checkValue($_POST['transferee_1']);
 
-    $transferee_1 = $db_handle->checkValue($_POST['transferee_1']);
 
-    $transferee_2 = $db_handle->checkValue($_POST['transferee_2']);
-
-    $transferee_3 = $db_handle->checkValue($_POST['transferee_3']);
-
-    if ($transferee_1 != '') {
-        $transferee .= $transferee_1 . ', ';
-    }
-
-    if ($transferee_2 != '') {
-        $transferee .= $transferee_2 . ', ';
-    }
-
-    if ($transferee_3 != '') {
-        $transferee .= $transferee_3 . ', ';
-    }
 
     $inserted_at = date("Y-m-d H:i:s");
 
@@ -201,7 +185,7 @@ if (isset($_POST["withdrawCNY"])) {
 }
 
 if (isset($_GET["withdrawStakeID"])) {
-    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.client_id={$_GET["withdrawStakeID"]}");
+    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.id={$_GET["withdrawStakeID"]}");
 
 
     $d_usdt = $cny_data[0]["amount"];
@@ -226,7 +210,7 @@ if (isset($_GET["withdrawStakeID"])) {
     $client_id = $cny_data[0]["client_id"];
     $inserted_at = date("Y-m-d H:i:s");
     if ($cny_data[0]["staking_days"] - $days < 0) {
-        $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[0]["id"]}'");
+        $delete = $db_handle->insertQuery("delete from stake where id='{$_GET["depositStakeID"]}'");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
 
@@ -244,7 +228,7 @@ if (isset($_GET["withdrawStakeID"])) {
 }
 
 if (isset($_GET["depositStakeID"])) {
-    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.client_id={$_GET["depositStakeID"]}");
+    $cny_data = $db_handle->runQuery("SELECT * FROM stake as s, client as c where s.client_id=c.id and s.id={$_GET["depositStakeID"]}");
 
 
     $d_usdt = $cny_data[0]["amount"];
@@ -271,13 +255,13 @@ if (isset($_GET["depositStakeID"])) {
 
     if ($cny_data[0]["staking_days"] - $days <= 0) {
 
-        $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[0]["id"]}'");
+        $delete = $db_handle->insertQuery("delete from stake where id='{$_GET["depositStakeID"]}'");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Deposit','$inserted_at')");
 
         echo "<script>
                 document.cookie = 'alert = 3;';
-                window.location.href='Stake-CNY';
+                window.location.href='Stake-CNY&days=$days';
                 </script>";
     }else{
         echo "<script>

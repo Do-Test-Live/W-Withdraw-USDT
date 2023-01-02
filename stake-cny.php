@@ -99,6 +99,7 @@ date_default_timezone_set("Asia/Hong_Kong");
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <?php if (isset($_GET['todayCheck'])) {
+                    $day=$_GET['todayCheck'];
                     ?>
                     <div class="col-12">
                         <div class="card">
@@ -140,7 +141,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 $days = $later->diff($earlier)->format("%a"); //3
                                             }
 
-                                            if ((int)$cny_data[$i]["staking_days"] - (int)$days <= 0) {
+                                            if ((int)$cny_data[$i]["staking_days"] - (int)$days == $day) {
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $i + 1; ?></td>
@@ -173,7 +174,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
                                                     <td>
                                                         <?php
-                                                        $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
+                                                        $newDate = date('d/m/Y h:i:s a', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
                                                         echo $newDate;
                                                         ?>
                                                     </td>
@@ -376,7 +377,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
                                                 <td>
                                                     <?php
-                                                    $newDate = date('Y-m-d H:i:s', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
+                                                    $newDate = date('d/m/Y h:i:s a', strtotime($cny_data[$i]["inserted_at"]. ' + '.$cny_data[$i]["staking_days"].' days'));
                                                     echo $newDate;
                                                     ?>
                                                 </td>
