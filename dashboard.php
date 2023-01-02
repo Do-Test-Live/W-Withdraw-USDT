@@ -122,7 +122,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         $total += $d_usdt;
                                     }
                                     if ($total != 0)
-                                        echo round($total, 4);
+                                        echo round($total, 2);
                                     else
                                         echo '0.00';
                                     ?>
@@ -156,7 +156,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     }
 
                                     if ($total != 0)
-                                        echo round($total, 4);
+                                        echo round($total, 2);
                                     else
                                         echo '0.00';
                                     ?>
@@ -211,7 +211,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             }
                                         }
                                         if ($total != 0)
-                                            echo round($total, 4);
+                                            echo round($total, 2);
                                         else
                                             echo '0.00';
                                         ?>
@@ -267,7 +267,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             }
                                         }
                                         if ($total != 0)
-                                            echo round($total, 4);
+                                            echo round($total, 2);
                                         else
                                             echo '0.00';
                                         ?>

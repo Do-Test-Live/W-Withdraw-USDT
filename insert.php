@@ -102,12 +102,11 @@ if (isset($_POST["stakeCNY"])) {
 
     $amount = (double)$db_handle->checkValue($_POST['amount']);
 
-    $start_time = $db_handle->checkValue($_POST['start_time']);
 
     $inserted_at = date("Y-m-d H:i:s");
 
     if ($amount <= $available_amount) {
-        $insert = $db_handle->insertQuery("INSERT INTO `stake`( `client_id`, `conversion_rate`, `amount`, `staking_days`, `inserted_at`) VALUES ('$client_id','$conversion_rate','$amount','$staking_days','$start_time')");
+        $insert = $db_handle->insertQuery("INSERT INTO `stake`( `client_id`, `conversion_rate`, `amount`, `staking_days`, `inserted_at`) VALUES ('$client_id','$conversion_rate','$amount','$staking_days','$inserted_at')");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Stake','$inserted_at')");
 

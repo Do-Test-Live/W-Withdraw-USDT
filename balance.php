@@ -7,7 +7,7 @@ if (isset($_POST["id"])) {
     $row_count = $db_handle->numRows("SELECT * FROM balance where client_id='{$_POST["id"]}' and balance_type='Deposit'");
     $total_balance = 0;
     for ($i = 0; $i < $row_count; $i++) {
-        $total_balance+=$balance[$i]["balance"];
+        $total_balance+=$balance[$i]["balance"]/$balance[$i]["conversion_rate"];
     }
 
     echo round($total_balance,2);
