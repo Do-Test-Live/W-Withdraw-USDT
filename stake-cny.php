@@ -22,7 +22,7 @@ date_default_timezone_set("Asia/Hong_Kong");
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Stake CNY | CNY/HKD</title>
+    <title>Stake HKD | CNY/HKD</title>
 
     <?php require_once('include/css.php'); ?>
 
@@ -72,7 +72,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
                         <div class="dashboard_bar">
-                            Stake CNY
+                            Stake HKD
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Staking CNY</h4>
+                                <h4 class="card-title">Staking HKD</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -142,7 +142,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 $days = $later->diff($earlier)->format("%a"); //3
                                             }
 
-                                            if ((int)$cny_data[$i]["staking_days"] - (int)$days < 0) {
+                                            if ((int)$cny_data[$i]["staking_days"] - (int)$days <= 0) {
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $i + 1; ?></td>
@@ -247,7 +247,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Stake CNY</h4>
+                                <h4 class="card-title">Stake HKD</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -273,7 +273,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Amount</label>
+                                            <label class="col-sm-3 col-form-label">Stake HKD</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="amount"
                                                        placeholder="Amount">

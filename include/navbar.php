@@ -41,16 +41,17 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li>
-                <a class="ai-icon" href="Stake-CNY" aria-expanded="false">
-                    <i class="flaticon-041-graph"></i>
-                    <span class="nav-text">Stake CNY</span>
-                </a>
-            </li>
+
             <li>
                 <a class="ai-icon" href="Client" aria-expanded="false">
                     <i class="flaticon-045-heart"></i>
                     <span class="nav-text">Client</span>
+                </a>
+            </li>
+            <li>
+                <a class="ai-icon" href="Stake-CNY" aria-expanded="false">
+                    <i class="flaticon-041-graph"></i>
+                    <span class="nav-text">Stake HKD</span>
                 </a>
             </li>
         </ul>

@@ -142,7 +142,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Proof Image (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Bank in Proof Image (Optional)</label>
                                             <div class="col-sm-9">
                                                 <div class="form-file">
                                                     <input type="file" class="form-file-input" name="proof_image">
@@ -532,7 +532,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>HKD/CNY</th>
                                             <th>Withdraw CNY</th>
                                             <th>Payout HKD</th>
-                                            <th>Proof</th>
+                                            <th>Bank in Proof</th>
                                             <th>Inserted Time</th>
                                         </tr>
                                         </thead>
@@ -556,7 +556,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo $client[$i]["proof"]; ?>"
-                                                       target="_blank">Proof</a>
+                                                       target="_blank">Bank in Proof</a>
                                                 </td>
                                                 <td>
                                                     <?php

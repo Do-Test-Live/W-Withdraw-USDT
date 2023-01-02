@@ -269,7 +269,7 @@ if (isset($_GET["depositStakeID"])) {
     $client_id = $cny_data[0]["client_id"];
     $inserted_at = date("Y-m-d H:i:s");
 
-    if ($cny_data[0]["staking_days"] - $days < 0) {
+    if ($cny_data[0]["staking_days"] - $days <= 0) {
 
         $delete = $db_handle->insertQuery("delete from stake where id='{$cny_data[0]["id"]}'");
 
