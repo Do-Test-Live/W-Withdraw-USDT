@@ -238,3 +238,15 @@ if (isset($_POST['updatePassword'])) {
                 </script>";
     }
 }
+
+if (isset($_POST['updateDate'])) {
+    $id = $db_handle->checkValue($_POST['id']);
+    $inserted_at = $db_handle->checkValue($_POST['inserted_at']);
+
+    $update = $db_handle->insertQuery("UPDATE `stake` SET `inserted_at`='$inserted_at' WHERE `id`='{$id}'");
+
+    echo "<script>
+                document.cookie = 'alert = 3;';
+                window.location.href='Stake-CNY';
+                </script>";
+}

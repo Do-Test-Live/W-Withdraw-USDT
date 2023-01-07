@@ -506,7 +506,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $cny_data = $db_handle->runQuery("SELECT * FROM client as c,stake as s where s.client_id=c.id order by s.id desc");
+                                            $cny_data = $db_handle->runQuery("SELECT *, s.id as sid FROM client as c,stake as s where s.client_id=c.id order by s.id desc");
                                             $row_count = $db_handle->numRows("SELECT * FROM stake as s, client as c where s.client_id=c.id order by s.id desc");
 
                                             for ($i = 0; $i < $row_count; $i++) {
@@ -560,13 +560,21 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <?php
-                                                        $insert_time = new DateTime($cny_data[$i]["inserted_at"]);
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <?php
+                                                                $insert_time = new DateTime($cny_data[$i]["inserted_at"]);
 
-                                                        $new = $insert_time->format('d/m/Y h:i:s a');
+                                                                $new = $insert_time->format('d/m/Y h:i:s a');
 
-                                                        echo $new;
-                                                        ?>
+                                                                echo $new;
+                                                                ?> </div>
+                                                            <div class="col-3">
+                                                                <a href="Stake-Update?stake_id=<?php echo $cny_data[$i]["sid"]; ?>"
+                                                                   class="btn btn-primary shadow btn-xs sharp mt-2"><i
+                                                                            class="fa fa-pencil"></i></a>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <?php
