@@ -27,18 +27,35 @@ if (isset($_POST["id"])) {
                 ?>
                 <tr>
                     <td class="text-center"><?php echo $i + 1; ?></td>
-                    <td class="strong text-end"><?php echo $balance[$i]["balance"]; ?></td>
+                    <td class="strong text-end">
+                        <?php
+                        if($balance[$i]["balance_type"]=='Deposit'){
+                            echo round($balance[$i]["balance"],2);
+                        }else{
+                            echo round($balance[$i]["balance"]*$balance[$i]["conversion_rate"],2);
+                        }
+
+                        ?>
+                    </td>
                     <td class="text-center"><?php echo $balance[$i]["conversion_rate"]; ?></td>
                     <td class="text-center"><?php echo $balance[$i]["balance_type"]; ?></td>
-                    <td class="text-end"><?php echo round($balance[$i]["balance"] / $balance[$i]["conversion_rate"],4); ?></td>
+                    <td class="text-end">
+                        <?php
+                        if($balance[$i]["balance_type"]=='Deposit'){
+                            echo round($balance[$i]["balance"] / $balance[$i]["conversion_rate"],2);
+                        }else{
+                            echo round($balance[$i]["balance"],2);
+                        }
+                        ?>
+                    </td>
                 </tr>
                 <?php
                 if ($balance[$i]["balance_type"] == 'Deposit') {
                     $total_deposit += $balance[$i]["balance"] / $balance[$i]["conversion_rate"];
                 } else if ($balance[$i]["balance_type"] == 'Withdraw') {
-                    $total_withdraw += $balance[$i]["balance"] / $balance[$i]["conversion_rate"];
+                    $total_withdraw += $balance[$i]["balance"];
                 } else if ($balance[$i]["balance_type"] == 'Stake') {
-                    $total_stake += $balance[$i]["balance"] / $balance[$i]["conversion_rate"];
+                    $total_stake += $balance[$i]["balance"];
                 }
             }
             $remain_balance = $total_deposit - $total_withdraw - $total_stake;
@@ -55,7 +72,7 @@ if (isset($_POST["id"])) {
                     <td class="text-left"><strong>Total Deposit HKD</strong></td>
                     <td class="text-end">
                         <?php
-                        echo round($total_deposit,4);
+                        echo round($total_deposit,2);
                         ?>
                     </td>
                 </tr>
@@ -64,7 +81,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($total_stake,4);
+                            echo round($total_stake,2);
                             ?>
                         </strong>
                     </td>
@@ -74,7 +91,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($total_withdraw,4);
+                            echo round($total_withdraw,2);
                             ?>
                         </strong>
                     </td>
@@ -84,7 +101,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($remain_balance,4);
+                            echo abs(round($remain_balance,2));
                             ?>
                         </strong>
                     </td>

@@ -109,7 +109,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                             <div>
                                 <h2 class="text-white invoice-num">
                                     <?php
-                                    $data = $db_handle->runQuery("SELECT * FROM balance where balance_type='Deposit';");
+                                    $today = "%".date("Y-m-d")."%";
+                                    
+                                    $data = $db_handle->runQuery("SELECT * FROM balance where balance_type='Deposit' and inserted_at like '$today';");
 
                                     $row_count = $db_handle->numRows("SELECT * FROM balance where balance_type='Deposit'");
 
@@ -128,7 +130,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     ?>
                                     CNY
                                 </h2>
-                                <span class="text-white fs-18">CNY Balance</span>
+                                <span class="text-white fs-18">TODAY(00:00 - 11:59pm) total deposit</span>
                             </div>
                         </div>
                     </div>

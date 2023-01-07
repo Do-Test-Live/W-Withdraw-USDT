@@ -41,7 +41,6 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-
             <li>
                 <a class="ai-icon" href="Client" aria-expanded="false">
                     <i class="flaticon-045-heart"></i>

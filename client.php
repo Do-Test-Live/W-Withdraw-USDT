@@ -101,7 +101,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Withdraw CNY</h4>
+                                <h4 class="card-title">Withdraw HKD</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -396,12 +396,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         if ($balance[$j]["balance_type"] == 'Deposit') {
                                                             $total += $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
                                                         } else {
-                                                            $total -= $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
+                                                            $total -= $balance[$j]["balance"];
                                                         }
 
                                                     }
 
-                                                    echo round($total, 4);
+                                                    echo abs(round($total, 2));
                                                     ?>
                                                 </td>
                                                 <td>
@@ -416,7 +416,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <?php
                                                     if ($total > 0) {
                                                         ?>
-                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo round($total, 4); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
+                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo round($total, 2); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
                                                            class="btn btn-primary">Withdraw
                                                         </a>
                                                         <?php
@@ -460,7 +460,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <tbody>
                                         <?php
                                         $client = $db_handle->runQuery("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id order by d.id desc");
-                                        $row_count = $db_handle->numRows("SELECT * FROM withdraw as d, client as c where d.client_id=c.id order by d.id desc");
+                                        $row_count = $db_handle->numRows("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id order by d.id desc");
 
                                         for ($i = 0; $i < $row_count; $i++) {
                                             ?>
@@ -615,7 +615,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 <script>
     function calculateBalance(balance) {
         let total_amount = parseFloat(document.getElementById('total_amount').value);
-        document.getElementById('remain_withdraw').value = parseFloat(total_amount - balance).toFixed(4);
+        document.getElementById('remain_withdraw').value = parseFloat(total_amount - balance).toFixed(2);
     }
 
     function usdtDelete(id) {

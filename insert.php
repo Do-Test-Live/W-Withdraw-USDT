@@ -85,20 +85,10 @@ if (isset($_POST["stakeCNY"])) {
 
     $staking_days = $db_handle->checkValue($_POST['staking_days']);
 
-    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Deposit'");
-
-    $available_amount = (double)$cny_data[0]["user_balance"];
-
+    $cny_data = $db_handle->runQuery("SELECT * FROM balance where client_id='$client_id'");
     $conversion_rate = $db_handle->checkValue($cny_data[0]['conversion_rate']);
 
-    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Withdraw'");
-
-    $available_amount -= (double)$cny_data[0]["user_balance"];
-
-    $cny_data = $db_handle->runQuery("SELECT sum(balance) as user_balance, conversion_rate FROM balance where client_id='$client_id' and balance_type='Stake'");
-
-    $available_amount -= (double)$cny_data[0]["user_balance"];
-
+    $available_amount = (double)$db_handle->checkValue($_POST['available_balance']);
 
     $amount = (double)$db_handle->checkValue($_POST['amount']);
 
