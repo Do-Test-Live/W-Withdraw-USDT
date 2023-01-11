@@ -103,7 +103,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Client Deposit Record <?php echo  $today?></h4>
+                                <h4 class="card-title">Client Deposit Record <?php echo date('Y-m-d');?></h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -126,6 +126,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </thead>
                                         <tbody>
                                         <?php
+                                        $total_cny=0;
+                                        $total_hkd=0;
+
                                         $client = $db_handle->runQuery("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id and d.inserted_at like '$today' order by d.id desc");
                                         $row_count = $db_handle->numRows("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id and d.inserted_at like '$today' order by d.id desc");
 
@@ -140,10 +143,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $client[$i]["account_number"]; ?></td>
                                                 <td><?php echo $client[$i]["bank_name"]; ?></td>
                                                 <td><?php echo $client[$i]["bank_holder"]; ?></td>
-                                                <td><?php echo $client[$i]["amount"]; ?></td>
+                                                <td><?php
+                                                    echo $client[$i]["amount"];
+                                                    $total_cny+=$client[$i]["amount"];
+                                                ?></td>
                                                 <td>
                                                     <?php
-                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4);
+                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
+                                                    $total_hkd+=round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
                                                     ?>
                                                 </td>
                                                 <td>
@@ -165,6 +172,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         ?>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div>
+                                    <h4 class="card-title mt-5">Total Cny Balance: <?php echo round($total_cny,2); ?></h4>
+                                    <h4 class="card-title">Total HKD Balance: <?php echo round($total_hkd,2); ?></h4>
                                 </div>
                             </div>
                         </div>
