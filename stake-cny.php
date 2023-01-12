@@ -290,11 +290,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Staking Days (T3, T7, T10
-                                                etc.)</label>
+                                            <label class="col-sm-3 col-form-label">Staking (T+X) days</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="staking_days"
-                                                       placeholder="Staking Days (T3, T7, T10 etc.)">
+                                                       placeholder="Staking (T+X) days">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -501,7 +500,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <th>Inserted Time</th>
                                                 <th>Updated Time</th>
                                                 <th>Withdraw</th>
-                                                <th>Deposit</th>
+                                                <th>To Balance</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -606,7 +605,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         /*                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
                                                                                                             */ ?>
                                                         <a href="Insert?depositStakeID=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-secondary">Deposit</a>
+                                                           class="btn btn-secondary">To balance</a>
                                                         <?php
                                                         /*                                                }
                                                                                                         */ ?>

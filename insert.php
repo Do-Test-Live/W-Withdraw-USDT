@@ -68,7 +68,6 @@ if (isset($_POST["addClient"])) {
     $transferee = $db_handle->checkValue($_POST['transferee_1']);
 
 
-
     $inserted_at = date("Y-m-d H:i:s");
 
 
@@ -193,12 +192,14 @@ if (isset($_GET["withdrawStakeID"])) {
         $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
     }
 
+    $startTime = strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days');
+    $endTime = strtotime($today);
 
     $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);
     $conversion_rate = $cny_data[0]["conversion_rate"];
     $client_id = $cny_data[0]["client_id"];
     $inserted_at = date("Y-m-d H:i:s");
-    if ($cny_data[0]["staking_days"] - $days < 0) {
+    if ($endTime >= $startTime) {
         $delete = $db_handle->insertQuery("delete from stake where id='{$_GET["depositStakeID"]}'");
 
         $insert = $db_handle->insertQuery("INSERT INTO `balance`( `client_id`, `balance`, `conversion_rate`, `balance_type`, `inserted_at`) VALUES ('$client_id','$amount','$conversion_rate','Withdraw','$inserted_at')");
@@ -207,7 +208,7 @@ if (isset($_GET["withdrawStakeID"])) {
                 document.cookie = 'alert = 3;';
                 window.location.href='Stake-CNY';
                 </script>";
-    }else{
+    } else {
         echo "<script>
                 document.cookie = 'alert = 7;';
                 window.location.href='Stake-CNY';
@@ -236,13 +237,15 @@ if (isset($_GET["depositStakeID"])) {
         $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
     }
 
+    $startTime = strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days');
+    $endTime = strtotime($today);
 
     $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);
     $conversion_rate = $cny_data[0]["conversion_rate"];
     $client_id = $cny_data[0]["client_id"];
     $inserted_at = date("Y-m-d H:i:s");
 
-    if ($cny_data[0]["staking_days"] - $days <= 0) {
+    if ($endTime >= $startTime) {
 
         $delete = $db_handle->insertQuery("delete from stake where id='{$_GET["depositStakeID"]}'");
 
@@ -252,7 +255,7 @@ if (isset($_GET["depositStakeID"])) {
                 document.cookie = 'alert = 3;';
                 window.location.href='Stake-CNY&days=$days';
                 </script>";
-    }else{
+    } else {
         echo "<script>
                 document.cookie = 'alert = 7;';
                 window.location.href='Stake-CNY';
