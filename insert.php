@@ -189,10 +189,10 @@ if (isset($_GET["withdrawStakeID"])) {
     $days = $later->diff($earlier)->format("%a"); //3
 
     if ($days >= 7) {
-        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+        $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
     }
 
-    $startTime = strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days');
+    $startTime =  strtotime(date("Y-m-d",strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days')));
     $endTime = strtotime($today);
 
     $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);
@@ -234,10 +234,10 @@ if (isset($_GET["depositStakeID"])) {
     $days = $later->diff($earlier)->format("%a"); //3
 
     if ($days >= 7) {
-        $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+        $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
     }
 
-    $startTime = strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days');
+    $startTime =  strtotime(date("Y-m-d",strtotime($cny_data[0]["inserted_at"] . ' + ' . $cny_data[0]["staking_days"] . ' days')));
     $endTime = strtotime($today);
 
     $amount = round(($w_usdt * $cny_data[0]["conversion_rate"]), 4);

@@ -123,7 +123,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         $total += $d_usdt;
                                     }
                                     if ($total != 0)
-                                        echo round($total, 2);
+                                        echo number_format((float)round($total, 2), 2, '.', '');
                                     else
                                         echo '0.00';
                                     ?>
@@ -162,7 +162,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             $total += $d_usdt;
                                         }
                                         if ($total != 0)
-                                            echo round($total, 2);
+                                            echo number_format((float)round($total, 2), 2, '.', '');
                                         else
                                             echo '0.00';
                                         ?>
@@ -205,7 +205,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                     }
                                     if ($total != 0)
-                                        echo round($total, 2);
+                                        echo number_format((float)round($total, 2), 2, '.', '');
                                     else
                                         echo '0.00';
                                     ?>
@@ -239,7 +239,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                     }
 
                                     if ($total != 0)
-                                        echo round($total, 2);
+                                        echo number_format((float)round($total, 2), 2, '.', '');
                                     else
                                         echo '0.00';
                                     ?>
@@ -281,7 +281,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                 $d_usdt = $data[$i]['amount'];
 
-                                                $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
 
                                                 $total += $w_usdt;
                                             } else if ($data[$i]["status"] == 'Pending' && ($data[$i]['staking_days'] - $days) == 0) {
@@ -294,7 +294,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             }
                                         }
                                         if ($total != 0)
-                                            echo round($total, 2);
+                                            echo number_format((float)round($total, 2), 2, '.', '');
                                         else
                                             echo '0.00';
                                         ?>
@@ -337,7 +337,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                 $d_usdt = $data[$i]['amount'];
 
-                                                $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
 
                                                 $total += $w_usdt;
                                             } else if ($data[$i]["status"] == 'Pending' && ($data[$i]['staking_days'] - $days) == 1) {
@@ -350,7 +350,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             }
                                         }
                                         if ($total != 0)
-                                            echo round($total, 2);
+                                            echo number_format((float)round($total, 2), 2, '.', '');
                                         else
                                             echo '0.00';
                                         ?>

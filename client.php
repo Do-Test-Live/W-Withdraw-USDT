@@ -117,7 +117,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name</label>
+                                            <label class="col-sm-3 col-form-label">Client Name</label>r
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control"
                                                        placeholder="Client Name"
@@ -142,7 +142,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank in Proof Image (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Bank in Proof Image
+                                                (Optional)</label>
                                             <div class="col-sm-9">
                                                 <div class="form-file">
                                                     <input type="file" class="form-file-input" name="proof_image">
@@ -208,7 +209,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </div>
                                         <div class="mb-3 row">
                                             <div class="col-sm-6 mx-auto">
-                                                <button type="submit" class="btn btn-primary w-50" name="withdrawRecord">
+                                                <button type="submit" class="btn btn-primary w-50"
+                                                        name="withdrawRecord">
                                                     Show Record
                                                 </button>
                                             </div>
@@ -337,7 +339,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Bank in Proof Image (Optional)</label>
+                                            <label class="col-sm-3 col-form-label">Bank in Proof Image
+                                                (Optional)</label>
                                             <div class="col-sm-9">
                                                 <div class="form-file">
                                                     <input type="file" class="form-file-input" name="proof_image">
@@ -368,8 +371,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         <tr>
                                             <th>SL</th>
                                             <th>Client Name</th>
-                                            <th>Transferee</th>
-                                            <th>Total Balance</th>
+                                            <th>Total HKD Balance</th>
+                                            <th>Total CNY Balance</th>
                                             <th>View Records</th>
                                             <th>Withdraw</th>
                                         </tr>
@@ -384,7 +387,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
                                                 <td><?php echo $client[$i]["client_name"]; ?></td>
-                                                <td><?php echo $client[$i]["trasferee"]; ?></td>
                                                 <td>
                                                     <?php
 
@@ -401,7 +403,26 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     }
 
-                                                    echo abs(round($total, 2));
+                                                    echo number_format((float)abs(round($total, 2)), 2, '.', '');
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+
+                                                    $balance = $db_handle->runQuery("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
+                                                    $row = $db_handle->numRows("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
+                                                    $total = 0;
+                                                    for ($j = 0; $j < $row; $j++) {
+
+                                                        if ($balance[$j]["balance_type"] == 'Deposit') {
+                                                            $total += $balance[$j]["balance"];
+                                                        } else {
+                                                            $total -= $balance[$j]["balance"] * $balance[$j]["conversion_rate"];
+                                                        }
+
+                                                    }
+
+                                                    echo number_format((float)abs(round($total, 2)), 2, '.', '');
                                                     ?>
                                                 </td>
                                                 <td>
@@ -416,7 +437,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     <?php
                                                     if ($total > 0) {
                                                         ?>
-                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo round($total, 2); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
+                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo number_format((float)round($total, 2), 2, '.', ''); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
                                                            class="btn btn-primary">Withdraw
                                                         </a>
                                                         <?php
@@ -459,8 +480,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $total_cny=0;
-                                        $total_hkd=0;
+                                        $total_cny = 0;
+                                        $total_hkd = 0;
 
                                         $client = $db_handle->runQuery("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id order by d.id desc");
                                         $row_count = $db_handle->numRows("SELECT * FROM deposit_cny as d, client as c where d.client_id=c.id order by d.id desc");
@@ -478,13 +499,13 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $client[$i]["bank_holder"]; ?></td>
                                                 <td><?php
                                                     echo $client[$i]["amount"];
-                                                    $total_cny+=$client[$i]["amount"];
-                                                ?>
+                                                    $total_cny += $client[$i]["amount"];
+                                                    ?>
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
-                                                    $total_hkd+=round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
+                                                    echo number_format((float)round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2), 2, '.', '');
+                                                    $total_hkd += round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
                                                     ?>
                                                 </td>
                                                 <td>
@@ -507,8 +528,8 @@ date_default_timezone_set("Asia/Hong_Kong");
                                         </tbody>
                                     </table>
                                 </div>
-                                <h4 class="card-title mt-5">Total Cny Balance: <?php echo round($total_cny,2); ?></h4>
-                                <h4 class="card-title">Total HKD Balance: <?php echo round($total_hkd,2); ?></h4>
+                                <h4 class="card-title mt-5">Total Cny Balance: <?php echo number_format((float)round($total_cny, 2), 2, '.', ''); ?></h4>
+                                <h4 class="card-title">Total HKD Balance: <?php echo number_format((float)round($total_hkd, 2), 2, '.', ''); ?></h4>
                             </div>
                         </div>
                     </div>
@@ -547,7 +568,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $client[$i]["amount"]; ?></td>
                                                 <td>
                                                     <?php
-                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4);
+                                                    echo number_format((float)round($client[$i]["amount"] / $client[$i]["conversion_rate"], 4), 4, '.', '');
                                                     ?>
                                                 </td>
                                                 <td>

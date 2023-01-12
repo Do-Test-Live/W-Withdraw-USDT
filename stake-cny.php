@@ -115,13 +115,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             <th>Client Name</th>
                                             <th>HKD/CNY</th>
                                             <th>Deposit HKD</th>
-                                            <th>Stake Plan</th>
+                                            <th>Stake Interests</th>
                                             <th>Stake End Date</th>
                                             <th>Status</th>
                                             <th>Inserted Time</th>
                                             <th>Updated Time</th>
-                                            <th>Withdraw</th>
-                                            <th>Deposit</th>
+                                            <th>To Balance</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -162,8 +161,10 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                         $days = $later->diff($earlier)->format("%a"); //3
 
+                                                        $days=$cny_data[$i]["staking_days"];
+
                                                         if ($days >= 7) {
-                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                            $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
                                                         }
 
                                                     }
@@ -171,10 +172,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     /*echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);*/
 
                                                     ?>
-                                                    <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
+                                                    <td><?php echo  number_format((float)($w_usdt-$d_usdt), 2, '.', ''); ?></td>
                                                     <td>
                                                         <?php
-                                                        $newDate = date('d/m/Y h:i:s a', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
+                                                        $newDate = date('d/m/Y', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
                                                         echo $newDate;
                                                         ?>
                                                     </td>
@@ -217,17 +218,9 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     </td>
                                                     <td>
                                                         <?php
-                                                        /* if ($cny_data[$i]["staking_days"] - $days < 0) {*/ ?>
-                                                        <a href="Insert?withdrawStakeID=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-primary">Withdraw</a>
-                                                        <?php
-                                                        /*}*/ ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
                                                         /*if ($cny_data[$i]["staking_days"] - $days < 0) {*/ ?>
                                                         <a href="Insert?depositStakeID=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-secondary">Deposit</a>
+                                                           class="btn btn-secondary">To balance</a>
                                                         <?php
                                                         /* }*/ ?>
                                                     </td>
@@ -354,13 +347,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <th>Client Name</th>
                                                 <th>HKD/CNY</th>
                                                 <th>Deposit HKD</th>
-                                                <th>Stake Plan</th>
+                                                <th>Stake Interests</th>
                                                 <th>Stake End Date</th>
                                                 <th>Status</th>
                                                 <th>Inserted Time</th>
                                                 <th>Updated Time</th>
-                                                <th>Withdraw</th>
-                                                <th>Deposit</th>
+                                                <th>To Balance</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -393,8 +385,10 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                             $days = $later->diff($earlier)->format("%a"); //3
 
+                                                            $days=$cny_data[$i]["staking_days"];
+
                                                             if ($days >= 7) {
-                                                                $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                                $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
                                                             }
 
                                                         }
@@ -402,10 +396,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         /*  echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);*/
 
                                                         ?>
-                                                        <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
+                                                        <td><?php echo  number_format((float)($w_usdt-$d_usdt), 2, '.', ''); ?></td>
                                                         <td>
                                                             <?php
-                                                            $newDate = date('d/m/Y h:i:s a', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
+                                                            $newDate = date('d/m/Y', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
                                                             echo $newDate;
                                                             ?>
                                                         </td>
@@ -461,7 +455,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                             /*                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
                                                                                                                 */ ?>
                                                             <a href="Insert?depositStakeID=<?php echo $cny_data[$i]["id"]; ?>"
-                                                               class="btn btn-secondary">Deposit</a>
+                                                               class="btn btn-secondary">To balance</a>
                                                             <?php
                                                             /*                                                }
                                                                                                             */ ?>
@@ -494,12 +488,11 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <th>Client Name</th>
                                                 <th>HKD/CNY</th>
                                                 <th>Deposit HKD</th>
-                                                <th>Stake Plan</th>
+                                                <th>Stake Interests</th>
                                                 <th>Stake End Date</th>
                                                 <th>Status</th>
                                                 <th>Inserted Time</th>
                                                 <th>Updated Time</th>
-                                                <th>Withdraw</th>
                                                 <th>To Balance</th>
                                             </tr>
                                             </thead>
@@ -528,9 +521,11 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         $later = new DateTime($cny_data[$i]["inserted_at"]);
 
                                                         $days = $later->diff($earlier)->format("%a"); //3
-
+                                                        
+                                                        $days=$cny_data[$i]["staking_days"];
+                                                        
                                                         if ($days >= 7) {
-                                                            $w_usdt = ((8 / 10000) * $days) + (double)$d_usdt;
+                                                            $w_usdt = (((8 / 10000) * $days)*$d_usdt) + (double)$d_usdt;
                                                         }
 
                                                     }
@@ -538,10 +533,10 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                     /*  echo round(($w_usdt / $cny_data[$i]["conversion_rate"]), 4);*/
 
                                                     ?>
-                                                    <td><?php echo $cny_data[$i]["staking_days"]; ?></td>
+                                                   <td><?php echo  number_format((float)($w_usdt-$d_usdt), 2, '.', ''); ?></td>
                                                     <td>
                                                         <?php
-                                                        $newDate = date('d/m/Y h:i:s a', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
+                                                        $newDate = date('d/m/Y', strtotime($cny_data[$i]["inserted_at"] . ' + ' . $cny_data[$i]["staking_days"] . ' days'));
                                                         echo $newDate;
                                                         ?>
                                                     </td>
@@ -589,16 +584,6 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                         }
 
                                                         ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        /*                                                if ($cny_data[$i]["staking_days"] - $days < 0) {
-                                                                                                            */ ?>
-                                                        <a href="Insert?withdrawStakeID=<?php echo $cny_data[$i]["id"]; ?>"
-                                                           class="btn btn-primary">Withdraw</a>
-                                                        <?php
-                                                        /*                                                }
-                                                                                                        */ ?>
                                                     </td>
                                                     <td>
                                                         <?php

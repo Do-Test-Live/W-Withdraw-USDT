@@ -9,6 +9,7 @@ if (isset($_POST["id"])) {
             <thead>
             <tr>
                 <th class="text-center">Serial</th>
+                <th class="text-center">Time</th>
                 <th class="text-end">CNY Balance</th>
                 <th class="text-center">Conversion Rate</th>
                 <th class="text-center">Type</th>
@@ -27,12 +28,19 @@ if (isset($_POST["id"])) {
                 ?>
                 <tr>
                     <td class="text-center"><?php echo $i + 1; ?></td>
+                    <td class="text-center">
+                        <?php
+                        $newDate = date('d/m/Y H:i:s A', strtotime($balance[$i]["inserted_at"]));
+                        echo $newDate;
+                        ?>
+                    </td>
                     <td class="strong text-end">
                         <?php
+                        
                         if($balance[$i]["balance_type"]=='Deposit'){
-                            echo round($balance[$i]["balance"],2);
+                            echo  number_format((float)round($balance[$i]["balance"],2), 2, '.', '');
                         }else{
-                            echo round($balance[$i]["balance"]*$balance[$i]["conversion_rate"],2);
+                            echo number_format((float)round($balance[$i]["balance"]*$balance[$i]["conversion_rate"],2), 2, '.', '');
                         }
 
                         ?>
@@ -42,9 +50,9 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <?php
                         if($balance[$i]["balance_type"]=='Deposit'){
-                            echo round($balance[$i]["balance"] / $balance[$i]["conversion_rate"],2);
+                            echo number_format((float)round($balance[$i]["balance"] / $balance[$i]["conversion_rate"],2), 2, '.', '');
                         }else{
-                            echo round($balance[$i]["balance"],2);
+                            echo number_format((float)round($balance[$i]["balance"],2), 2, '.', '');
                         }
                         ?>
                     </td>
@@ -72,7 +80,7 @@ if (isset($_POST["id"])) {
                     <td class="text-left"><strong>Total Deposit HKD</strong></td>
                     <td class="text-end">
                         <?php
-                        echo round($total_deposit,2);
+                        echo number_format((float)round($total_deposit,2), 2, '.', '');
                         ?>
                     </td>
                 </tr>
@@ -81,7 +89,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($total_stake,2);
+                            echo number_format((float)round($total_stake,2), 2, '.', '');
                             ?>
                         </strong>
                     </td>
@@ -91,7 +99,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo round($total_withdraw,2);
+                            echo number_format((float)round($total_withdraw,2), 2, '.', '');
                             ?>
                         </strong>
                     </td>
@@ -101,7 +109,7 @@ if (isset($_POST["id"])) {
                     <td class="text-end">
                         <strong>
                             <?php
-                            echo abs(round($remain_balance,2));
+                            echo number_format((float)abs(round($remain_balance,2)), 2, '.', '');
                             ?>
                         </strong>
                     </td>
