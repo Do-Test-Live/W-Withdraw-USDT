@@ -333,7 +333,7 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                             $days = $later->diff($earlier)->format("%a"); //3
 
-                                            if ($data[$i]["status"] == 'Pending' && $days >= 7) {
+                                            if ($data[$i]["status"] == 'Pending' && $days >= 7&& ($data[$i]['staking_days'] - $days) == 1) {
 
                                                 $d_usdt = $data[$i]['amount'];
 

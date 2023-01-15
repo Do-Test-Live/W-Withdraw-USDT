@@ -117,7 +117,7 @@ date_default_timezone_set("Asia/Hong_Kong");
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Client Name</label>r
+                                            <label class="col-sm-3 col-form-label">Client Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control"
                                                        placeholder="Client Name"
@@ -392,18 +392,18 @@ date_default_timezone_set("Asia/Hong_Kong");
 
                                                     $balance = $db_handle->runQuery("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
                                                     $row = $db_handle->numRows("SELECT * FROM balance where client_id={$client[$i]["id"]} order by id desc");
-                                                    $total = 0;
+                                                    $total_hkd = 0;
                                                     for ($j = 0; $j < $row; $j++) {
 
                                                         if ($balance[$j]["balance_type"] == 'Deposit') {
-                                                            $total += $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
+                                                            $total_hkd += $balance[$j]["balance"] / $balance[$j]["conversion_rate"];
                                                         } else {
-                                                            $total -= $balance[$j]["balance"];
+                                                            $total_hkd -= $balance[$j]["balance"];
                                                         }
 
                                                     }
 
-                                                    echo number_format((float)abs(round($total, 2)), 2, '.', '');
+                                                    echo number_format((float)abs(round($total_hkd, 2)), 2, '.', '');
                                                     ?>
                                                 </td>
                                                 <td>
@@ -430,14 +430,14 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                             data-bs-toggle="modal"
                                                             data-bs-target=".bd-example-modal-lg"><i
                                                                 class="fa fa-eye"
-                                                                onclick="showRecord(<?php echo $client[$i]["id"]; ?>,'<?php echo $client[$i]["client_name"]; ?>');"></i>
+                                                                onclick="getValue('<?php echo $client[$i]["id"]; ?>','<?php echo $client[$i]["client_name"]; ?>');"></i>
                                                     </button>
                                                 </td>
                                                 <td>
                                                     <?php
                                                     if ($total > 0) {
                                                         ?>
-                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo number_format((float)round($total, 2), 2, '.', ''); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
+                                                        <a href="Client?withdrawId=<?php echo $client[$i]["id"]; ?>&total=<?php echo number_format((float)round($total_hkd, 2), 2, '.', ''); ?>&name=<?php echo $client[$i]["client_name"]; ?>"
                                                            class="btn btn-primary">Withdraw
                                                         </a>
                                                         <?php
@@ -610,6 +610,51 @@ date_default_timezone_set("Asia/Hong_Kong");
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12" id="viewRecord">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="myTable">
+                                    <tr>
+                                        <th class="text-center">Serial</th>
+                                        <th class="text-center">Time</th>
+                                        <th>CNY Balance</th>
+                                        <th>Conversion Rate</th>
+                                        <th>Type</th>
+                                        <th>HKD Balance</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-5"></div>
+                                <div class="col-lg-8 col-sm-7 ml-auto">
+                                    <table class="table table-clear">
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-left"><strong>Total Deposit HKD</strong></td>
+                                            <td class="text-end" id="total_deposit">
+                                               0.00
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><strong>Total Stake HKD</strong></td>
+                                            <td class="text-end" id="total_stake">
+                                                0.00
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><strong>Total Withdraw HKD</strong></td>
+                                            <td class="text-end" id="total_withdraw">
+                                                0.00
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><strong>Total Balance HKD</strong></td>
+                                            <td class="text-end" id="total_balance">
+                                                0.00
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -699,19 +744,92 @@ date_default_timezone_set("Asia/Hong_Kong");
     }
 </script>
 <script>
-    async function showRecord(id, name) {
-        $.ajax({
-            type: "POST",
-            url: "View-Record",
-            data: {id: id},
-            success: async function (msg) {
-                $("#viewRecord").html(msg)
-                $("#client_name").html(name)
-            },
-            error: function () {
-                alert("failure");
+    let total_deposit = 0, total_withdraw = 0, total_stake = 0, remain_balance = 0;
+    let client_id = [], time = [], cny_balance = [], conversion_rate = [], type = [], hkd_balance = [];
+    <?php
+    $balance = $db_handle->runQuery("SELECT * FROM balance");
+    $row_count = $db_handle->numRows("SELECT * FROM balance");
+    $client_id = '';
+    $time = '';
+    $cny_balance = '';
+    $conversion_rate = '';
+    $type = '';
+    $hkd_balance = '';
+    for ($i = 0; $i < $row_count; $i++) {
+        $client_id .= "'" . $balance[$i]["client_id"] . "',";
+        $time .= "'" . date('d/m/Y H:i:s A', strtotime($balance[$i]["inserted_at"])) . "',";
+        if ($balance[$i]["balance_type"] == 'Deposit') {
+            $cny_balance .= "'" . number_format((float)round($balance[$i]["balance"], 2), 2, '.', '') . "',";
+        } else {
+            $cny_balance .= "'" . number_format((float)round($balance[$i]["balance"] * $balance[$i]["conversion_rate"], 2), 2, '.', '') . "',";
+        }
+        $conversion_rate .= "'" . $balance[$i]["conversion_rate"] . "',";
+        $type .= "'" . $balance[$i]["balance_type"] . "',";
+
+        if ($balance[$i]["balance_type"] == 'Deposit') {
+            $hkd_balance .= "'" . number_format((float)round($balance[$i]["balance"] / $balance[$i]["conversion_rate"], 2), 2, '.', '') . "',";
+        } else {
+            $hkd_balance .= "'" . number_format((float)round($balance[$i]["balance"], 2), 2, '.', '') . "',";
+        }
+    }
+    ?>
+    client_id.push(<?php echo substr($client_id, 0, -1); ?>);
+    time.push(<?php echo substr($time, 0, -1); ?>);
+    cny_balance.push(<?php echo substr($cny_balance, 0, -1); ?>);
+    conversion_rate.push(<?php echo substr($conversion_rate, 0, -1); ?>);
+    type.push(<?php echo substr($type, 0, -1); ?>);
+    hkd_balance.push(<?php echo substr($hkd_balance, 0, -1); ?>);
+
+    function getValue(id, name) {
+        let table = document.getElementById("myTable");
+        let row, cell1, cell2, cell3, cell4, cell5, cell6;
+        let sl = 1;
+
+        let rows = table.rows;
+        let j = rows.length;
+        while (--j) {
+            rows[j].parentNode.removeChild(rows[j]);
+        }
+
+        let total_deposit=0,total_stake=0,total_withdraw=0,total_balance=0;
+
+        for (let i = 0; i < client_id.length; i++) {
+            if (id == client_id[i]) {
+                row = table.insertRow(sl);
+
+                cell1 = row.insertCell(0);
+                cell2 = row.insertCell(1);
+                cell3 = row.insertCell(2);
+                cell4 = row.insertCell(3);
+                cell5 = row.insertCell(4);
+                cell6 = row.insertCell(5);
+
+                cell1.innerHTML = "" + sl;
+                cell2.innerHTML = time[i];
+                cell3.innerHTML = cny_balance[i];
+                cell4.innerHTML = conversion_rate[i];
+                cell5.innerHTML = type[i];
+                cell6.innerHTML = hkd_balance[i];
+                sl++;
+
+
+                if(type[i]=='Deposit'){
+                    total_deposit+=parseFloat(hkd_balance[i]);
+                }else if(type[i]=='Withdraw'){
+                    total_withdraw+=parseFloat(hkd_balance[i]);
+                }else if(type[i]=='Stake'){
+                    total_stake+=parseFloat(hkd_balance[i]);
+                }
             }
-        });
+        }
+
+        total_balance=total_deposit-total_withdraw-total_stake;
+
+        document.getElementById('total_deposit').innerHTML=total_deposit.toFixed(2);
+        document.getElementById('total_withdraw').innerHTML=total_withdraw.toFixed(2);
+        document.getElementById('total_stake').innerHTML=total_stake.toFixed(2);
+        document.getElementById('total_balance').innerHTML=total_balance.toFixed(2);
+        document.getElementById('client_name').innerHTML=name;
     }
 </script>
 </body>

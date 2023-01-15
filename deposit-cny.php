@@ -144,12 +144,12 @@ date_default_timezone_set("Asia/Hong_Kong");
                                                 <td><?php echo $client[$i]["bank_name"]; ?></td>
                                                 <td><?php echo $client[$i]["bank_holder"]; ?></td>
                                                 <td><?php
-                                                    echo $client[$i]["amount"];
+                                                    echo number_format((float)$client[$i]["amount"], 2, '.', '');
                                                     $total_cny+=$client[$i]["amount"];
                                                 ?></td>
                                                 <td>
                                                     <?php
-                                                    echo round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
+                                                    echo number_format((float)round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2), 2, '.', '');
                                                     $total_hkd+=round($client[$i]["amount"] / $client[$i]["conversion_rate"], 2);
                                                     ?>
                                                 </td>
